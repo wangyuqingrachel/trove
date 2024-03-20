@@ -52,6 +52,34 @@
 			path = Pods;
 			sourceTree = "<group>";
 		};
+		4A3795192BAA9BE700E400DB /* TroveSetups */ = {
+			isa = PBXGroup;
+			children = (
+				4A6D50442BAA7FE3008F7298 /* AppDelegate.h */,
+				4A6D50452BAA7FE3008F7298 /* AppDelegate.m */,
+				4A6D50472BAA7FE3008F7298 /* SceneDelegate.h */,
+				4A6D50482BAA7FE3008F7298 /* SceneDelegate.m */,
+				4A6D50562BAA7FE7008F7298 /* main.m */,
+			);
+			path = TroveSetups;
+			sourceTree = "<group>";
+		};
+		4A37951A2BAA9C2300E400DB /* TroveBooks */ = {
+			isa = PBXGroup;
+			children = (
+				4A6D504A2BAA7FE3008F7298 /* ViewController.h */,
+				4A6D504B2BAA7FE3008F7298 /* ViewController.m */,
+			);
+			path = TroveBooks;
+			sourceTree = "<group>";
+		};
+		4A37951B2BAA9C5000E400DB /* TroveHistory */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = TroveHistory;
+			sourceTree = "<group>";
+		};
 		4A6D50382BAA7FE3008F7298 = {
 			isa = PBXGroup;
 			children = (
@@ -73,15 +101,11 @@
 		4A6D50432BAA7FE3008F7298 /* Trove */ = {
 			isa = PBXGroup;
 			children = (
-				4A6D50442BAA7FE3008F7298 /* AppDelegate.h */,
-				4A6D50452BAA7FE3008F7298 /* AppDelegate.m */,
-				4A6D50472BAA7FE3008F7298 /* SceneDelegate.h */,
-				4A6D50482BAA7FE3008F7298 /* SceneDelegate.m */,
-				4A6D504A2BAA7FE3008F7298 /* ViewController.h */,
-				4A6D504B2BAA7FE3008F7298 /* ViewController.m */,
-				4A6D50502BAA7FE7008F7298 /* Assets.xcassets */,
 				4A6D50552BAA7FE7008F7298 /* Info.plist */,
-				4A6D50562BAA7FE7008F7298 /* main.m */,
+				4A6D50502BAA7FE7008F7298 /* Assets.xcassets */,
+				4A3795192BAA9BE700E400DB /* TroveSetups */,
+				4A37951A2BAA9C2300E400DB /* TroveBooks */,
+				4A37951B2BAA9C5000E400DB /* TroveHistory */,
 			);
 			path = Trove;
 			sourceTree = "<group>";
