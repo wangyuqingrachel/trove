@@ -9,6 +9,7 @@
 #import <Masonry/Masonry.h>
 #import "TroveMacro.h"
 #import "TroveBookCell.h"
+#import "HistoryViewController.h"
 
 @interface ViewController () <UICollectionViewDelegate, UICollectionViewDataSource, UICollectionViewDelegateFlowLayout, UIViewControllerTransitioningDelegate>
 
@@ -26,12 +27,13 @@
 
 - (void)viewDidAppear:(BOOL)animated
 {
-    // 需要到viewDidAppear时navigationController才能就位，这时候让collectionView对齐才是准的
     [super viewDidAppear:animated];
-    [self.collectionView mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.top.equalTo(self.view).offset(self.navigationController.navigationBar.frame.origin.y + self.navigationController.navigationBar.frame.size.height);
-        make.left.right.bottom.offset(0);
-    }];
+    // 需要到viewDidAppear时navigationController才能就位，这时候让collectionView对齐才是准的
+    if ([self.view.subviews containsObject:self.collectionView]) {
+        [self.collectionView mas_updateConstraints:^(MASConstraintMaker *make) {
+            make.top.mas_equalTo(self.view).offset(self.navigationController.navigationBar.frame.origin.y + self.navigationController.navigationBar.frame.size.height);
+        }];
+    }
 }
 
 
@@ -45,13 +47,17 @@
     self.navigationItem.rightBarButtonItem = historyButton;
     // collection view
     [self.view addSubview:self.collectionView];
+    [self.collectionView mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.top.equalTo(self.view).offset(self.navigationController.navigationBar.frame.origin.y + self.navigationController.navigationBar.frame.size.height);
+        make.left.right.bottom.offset(0);
+    }];
 }
 
 #pragma mark - Action
 
 - (void)goToHistory
 {
-    
+    [self.navigationController pushViewController:[HistoryViewController new] animated:YES];
 }
 
 
