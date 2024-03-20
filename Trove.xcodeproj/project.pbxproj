@@ -7,6 +7,8 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		4A37951E2BAA9ED800E400DB /* TroveBookCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 4A37951D2BAA9ED800E400DB /* TroveBookCell.m */; };
+		4A3795272BAAA94F00E400DB /* TroveMacro.m in Sources */ = {isa = PBXBuildFile; fileRef = 4A3795262BAAA94F00E400DB /* TroveMacro.m */; };
 		4A6D50462BAA7FE3008F7298 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 4A6D50452BAA7FE3008F7298 /* AppDelegate.m */; };
 		4A6D50492BAA7FE3008F7298 /* SceneDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 4A6D50482BAA7FE3008F7298 /* SceneDelegate.m */; };
 		4A6D504C2BAA7FE3008F7298 /* ViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 4A6D504B2BAA7FE3008F7298 /* ViewController.m */; };
@@ -17,6 +19,10 @@
 
 /* Begin PBXFileReference section */
 		371372246D8F2C8610E2581F /* Pods-Trove.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Trove.debug.xcconfig"; path = "Target Support Files/Pods-Trove/Pods-Trove.debug.xcconfig"; sourceTree = "<group>"; };
+		4A37951C2BAA9ED800E400DB /* TroveBookCell.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = TroveBookCell.h; sourceTree = "<group>"; };
+		4A37951D2BAA9ED800E400DB /* TroveBookCell.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = TroveBookCell.m; sourceTree = "<group>"; };
+		4A3795252BAAA94F00E400DB /* TroveMacro.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = TroveMacro.h; sourceTree = "<group>"; };
+		4A3795262BAAA94F00E400DB /* TroveMacro.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = TroveMacro.m; sourceTree = "<group>"; };
 		4A6D50412BAA7FE3008F7298 /* Trove.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Trove.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		4A6D50442BAA7FE3008F7298 /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
 		4A6D50452BAA7FE3008F7298 /* AppDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AppDelegate.m; sourceTree = "<group>"; };
@@ -69,6 +75,8 @@
 			children = (
 				4A6D504A2BAA7FE3008F7298 /* ViewController.h */,
 				4A6D504B2BAA7FE3008F7298 /* ViewController.m */,
+				4A37951C2BAA9ED800E400DB /* TroveBookCell.h */,
+				4A37951D2BAA9ED800E400DB /* TroveBookCell.m */,
 			);
 			path = TroveBooks;
 			sourceTree = "<group>";
@@ -78,6 +86,15 @@
 			children = (
 			);
 			path = TroveHistory;
+			sourceTree = "<group>";
+		};
+		4A37951F2BAAA8CE00E400DB /* TroveCustomize */ = {
+			isa = PBXGroup;
+			children = (
+				4A3795252BAAA94F00E400DB /* TroveMacro.h */,
+				4A3795262BAAA94F00E400DB /* TroveMacro.m */,
+			);
+			path = TroveCustomize;
 			sourceTree = "<group>";
 		};
 		4A6D50382BAA7FE3008F7298 = {
@@ -101,6 +118,7 @@
 		4A6D50432BAA7FE3008F7298 /* Trove */ = {
 			isa = PBXGroup;
 			children = (
+				4A37951F2BAAA8CE00E400DB /* TroveCustomize */,
 				4A6D50552BAA7FE7008F7298 /* Info.plist */,
 				4A6D50502BAA7FE7008F7298 /* Assets.xcassets */,
 				4A3795192BAA9BE700E400DB /* TroveSetups */,
@@ -230,6 +248,8 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				4A37951E2BAA9ED800E400DB /* TroveBookCell.m in Sources */,
+				4A3795272BAAA94F00E400DB /* TroveMacro.m in Sources */,
 				4A6D504C2BAA7FE3008F7298 /* ViewController.m in Sources */,
 				4A6D50462BAA7FE3008F7298 /* AppDelegate.m in Sources */,
 				4A6D50572BAA7FE7008F7298 /* main.m in Sources */,
