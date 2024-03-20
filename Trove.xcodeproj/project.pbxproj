@@ -15,6 +15,10 @@
 		4A6D504C2BAA7FE3008F7298 /* ViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 4A6D504B2BAA7FE3008F7298 /* ViewController.m */; };
 		4A6D50512BAA7FE7008F7298 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 4A6D50502BAA7FE7008F7298 /* Assets.xcassets */; };
 		4A6D50572BAA7FE7008F7298 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 4A6D50562BAA7FE7008F7298 /* main.m */; };
+		4A8614C02BAABA3C00BDF693 /* TroveBookModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 4A8614BF2BAABA3C00BDF693 /* TroveBookModel.m */; };
+		4A8614C32BAABA9E00BDF693 /* TroveRecordModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 4A8614C22BAABA9E00BDF693 /* TroveRecordModel.m */; };
+		4A8614C62BAABB9700BDF693 /* TroveStorage.m in Sources */ = {isa = PBXBuildFile; fileRef = 4A8614C52BAABB9700BDF693 /* TroveStorage.m */; };
+		4A8614CC2BAABFE500BDF693 /* AddNewBookCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 4A8614CB2BAABFE500BDF693 /* AddNewBookCell.m */; };
 		9C1C2654F8A141CFDB69A5E5 /* Pods_Trove.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = DDEF260D28898925C4DBC851 /* Pods_Trove.framework */; };
 /* End PBXBuildFile section */
 
@@ -36,6 +40,14 @@
 		4A6D50502BAA7FE7008F7298 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		4A6D50552BAA7FE7008F7298 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		4A6D50562BAA7FE7008F7298 /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
+		4A8614BE2BAABA3C00BDF693 /* TroveBookModel.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = TroveBookModel.h; sourceTree = "<group>"; };
+		4A8614BF2BAABA3C00BDF693 /* TroveBookModel.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = TroveBookModel.m; sourceTree = "<group>"; };
+		4A8614C12BAABA9E00BDF693 /* TroveRecordModel.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = TroveRecordModel.h; sourceTree = "<group>"; };
+		4A8614C22BAABA9E00BDF693 /* TroveRecordModel.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = TroveRecordModel.m; sourceTree = "<group>"; };
+		4A8614C42BAABB9700BDF693 /* TroveStorage.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = TroveStorage.h; sourceTree = "<group>"; };
+		4A8614C52BAABB9700BDF693 /* TroveStorage.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = TroveStorage.m; sourceTree = "<group>"; };
+		4A8614CA2BAABFE500BDF693 /* AddNewBookCell.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AddNewBookCell.h; sourceTree = "<group>"; };
+		4A8614CB2BAABFE500BDF693 /* AddNewBookCell.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AddNewBookCell.m; sourceTree = "<group>"; };
 		DDEF260D28898925C4DBC851 /* Pods_Trove.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Trove.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		DFB9B7F7E7B2E3BD573B0345 /* Pods-Trove.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Trove.release.xcconfig"; path = "Target Support Files/Pods-Trove/Pods-Trove.release.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -80,6 +92,8 @@
 				4A6D504B2BAA7FE3008F7298 /* ViewController.m */,
 				4A37951C2BAA9ED800E400DB /* TroveBookCell.h */,
 				4A37951D2BAA9ED800E400DB /* TroveBookCell.m */,
+				4A8614CA2BAABFE500BDF693 /* AddNewBookCell.h */,
+				4A8614CB2BAABFE500BDF693 /* AddNewBookCell.m */,
 			);
 			path = TroveBooks;
 			sourceTree = "<group>";
@@ -123,6 +137,7 @@
 		4A6D50432BAA7FE3008F7298 /* Trove */ = {
 			isa = PBXGroup;
 			children = (
+				4A8614BD2BAAB99100BDF693 /* TroveData */,
 				4A6D50552BAA7FE7008F7298 /* Info.plist */,
 				4A6D50502BAA7FE7008F7298 /* Assets.xcassets */,
 				4A37951F2BAAA8CE00E400DB /* TroveCustomize */,
@@ -131,6 +146,19 @@
 				4A37951B2BAA9C5000E400DB /* TroveHistory */,
 			);
 			path = Trove;
+			sourceTree = "<group>";
+		};
+		4A8614BD2BAAB99100BDF693 /* TroveData */ = {
+			isa = PBXGroup;
+			children = (
+				4A8614BE2BAABA3C00BDF693 /* TroveBookModel.h */,
+				4A8614BF2BAABA3C00BDF693 /* TroveBookModel.m */,
+				4A8614C12BAABA9E00BDF693 /* TroveRecordModel.h */,
+				4A8614C22BAABA9E00BDF693 /* TroveRecordModel.m */,
+				4A8614C42BAABB9700BDF693 /* TroveStorage.h */,
+				4A8614C52BAABB9700BDF693 /* TroveStorage.m */,
+			);
+			path = TroveData;
 			sourceTree = "<group>";
 		};
 		A40B9D3B0D07CB5D8014CDB2 /* Frameworks */ = {
@@ -255,11 +283,15 @@
 			files = (
 				4A37951E2BAA9ED800E400DB /* TroveBookCell.m in Sources */,
 				4A3795272BAAA94F00E400DB /* TroveMacro.m in Sources */,
+				4A8614C32BAABA9E00BDF693 /* TroveRecordModel.m in Sources */,
 				4A6D504C2BAA7FE3008F7298 /* ViewController.m in Sources */,
+				4A8614C62BAABB9700BDF693 /* TroveStorage.m in Sources */,
 				4A6D50462BAA7FE3008F7298 /* AppDelegate.m in Sources */,
 				4A6D50572BAA7FE7008F7298 /* main.m in Sources */,
 				4A37952A2BAAAACC00E400DB /* HistoryViewController.m in Sources */,
 				4A6D50492BAA7FE3008F7298 /* SceneDelegate.m in Sources */,
+				4A8614C02BAABA3C00BDF693 /* TroveBookModel.m in Sources */,
+				4A8614CC2BAABFE500BDF693 /* AddNewBookCell.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -396,7 +428,7 @@
 				INFOPLIST_FILE = Trove/Info.plist;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchStoryboardName = LaunchScreen;
-				INFOPLIST_KEY_UIMainStoryboardFile = Main;
+				INFOPLIST_KEY_UIMainStoryboardFile = "";
 				INFOPLIST_KEY_UISupportedInterfaceOrientations = UIInterfaceOrientationPortrait;
 				IPHONEOS_DEPLOYMENT_TARGET = 14.5;
 				LD_RUNPATH_SEARCH_PATHS = (
@@ -425,7 +457,7 @@
 				INFOPLIST_FILE = Trove/Info.plist;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchStoryboardName = LaunchScreen;
-				INFOPLIST_KEY_UIMainStoryboardFile = Main;
+				INFOPLIST_KEY_UIMainStoryboardFile = "";
 				INFOPLIST_KEY_UISupportedInterfaceOrientations = UIInterfaceOrientationPortrait;
 				IPHONEOS_DEPLOYMENT_TARGET = 14.5;
 				LD_RUNPATH_SEARCH_PATHS = (
