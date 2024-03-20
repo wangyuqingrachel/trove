@@ -28,8 +28,8 @@
 - (void)encodeWithCoder:(NSCoder *)encoder {
     //Encode properties, other class variables, etc
     [encoder encodeObject:self.bookTitle forKey:@"book_title"];
-    [encoder encodeBool:self.totalPages forKey:@"total_pages"];
-    [encoder encodeBool:self.records forKey:@"records"];
+    [encoder encodeObject:self.totalPages forKey:@"total_pages"];
+    [encoder encodeObject:self.records forKey:@"records"];
 }
 
 - (id)initWithCoder:(NSCoder *)decoder {

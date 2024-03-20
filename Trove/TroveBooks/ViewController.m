@@ -150,7 +150,8 @@
         return cell;
     } else {
         TroveBookCell *cell = [collectionView dequeueReusableCellWithReuseIdentifier:[TroveBookCell identifier] forIndexPath:indexPath];
-        [cell config];
+        TroveBookModel *model = self.dataSource[indexPath.item];
+        [cell configWithBookModel:model];
         return cell;
     }
 }
@@ -163,7 +164,7 @@
 
 - (CGSize)collectionView:(UICollectionView *)collectionView layout:(UICollectionViewLayout *)collectionViewLayout sizeForItemAtIndexPath:(NSIndexPath *)indexPath
 {
-    return CGSizeMake(kScreenWidth,50); // cell size
+    return CGSizeMake(kScreenWidth, [TroveBookCell cellHeight]); // cell size
 }
 
 - (CGFloat)collectionView:(UICollectionView *)collectionView layout:(UICollectionViewLayout *)collectionViewLayout minimumInteritemSpacingForSectionAtIndex:(NSInteger)section

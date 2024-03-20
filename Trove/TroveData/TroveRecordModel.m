@@ -28,8 +28,8 @@
 - (void)encodeWithCoder:(NSCoder *)encoder {
     //Encode properties, other class variables, etc
     [encoder encodeObject:self.date forKey:@"date"];
-    [encoder encodeBool:self.page forKey:@"page"];
-    [encoder encodeBool:self.note forKey:@"note"];
+    [encoder encodeObject:self.page forKey:@"page"];
+    [encoder encodeObject:self.note forKey:@"note"];
 }
 
 - (id)initWithCoder:(NSCoder *)decoder {

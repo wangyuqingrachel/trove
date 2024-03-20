@@ -6,13 +6,15 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "TroveBookModel.h"
 
 NS_ASSUME_NONNULL_BEGIN
 
 @interface TroveBookCell : UICollectionViewCell
 
 + (NSString *)identifier;
-- (void)config;
++ (CGFloat)cellHeight;
+- (void)configWithBookModel:(TroveBookModel *)book;
 
 @end
 
