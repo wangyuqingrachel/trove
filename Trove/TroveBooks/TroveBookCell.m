@@ -24,6 +24,7 @@ static CGFloat const kPercentageWidth = 40;
 @property (nonatomic, strong) UIView *progressBar;
 @property (nonatomic, strong) UILabel *percentageLabel; // 87%
 
+@property (nonatomic, strong) UIImageView *crownView;
 
 @end
 
@@ -43,7 +44,14 @@ static CGFloat const kPercentageWidth = 40;
 {
     self.backgroundColor = [UIColor troveColorNamed:book.color];
     self.layer.cornerRadius = 10;
-    // title
+    // Crown
+    [self addSubview:self.crownView];
+    [self.crownView mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.left.top.offset(0);
+        make.width.height.mas_equalTo(40);
+    }];
+    self.crownView.hidden = YES;
+    // Title
     self.titleLabel.text = book.bookTitle;
     [self addSubview:self.titleLabel];
     [self.titleLabel mas_makeConstraints:^(MASConstraintMaker *make) {
@@ -73,7 +81,10 @@ static CGFloat const kPercentageWidth = 40;
     [self addSubview:self.progressBar];
 //    CGFloat percentage = book.records.count ? [book.records[book.records.count - 1].page doubleValue] / [book.totalPages doubleValue] : 0;
     CGFloat percentage = 0.8875498745; //gizmo
-    if (percentage > 1) percentage = 1; // protect
+    if (percentage >= 1) {
+        percentage = 1;
+        self.crownView.hidden = NO;
+    }
     _progressBar.backgroundColor = [UIColor trovePulseColorType:book.color];
     [self.progressBar mas_makeConstraints:^(MASConstraintMaker *make) {
         make.left.offset(kLeftRight);
@@ -93,6 +104,7 @@ static CGFloat const kPercentageWidth = 40;
 }
 
 #pragma mark - Getters
+
 - (UILabel *)titleLabel
 {
     if (!_titleLabel) {
@@ -145,5 +157,19 @@ static CGFloat const kPercentageWidth = 40;
     }
     return _percentageLabel;
 }
+
+- (UIImageView *)crownView
+{
+    if (!_crownView) {
+        _crownView = [UIImageView new];
+        UIImage *iconImage = [[UIImage systemImageNamed:@"crown.fill"]  imageWithRenderingMode:UIImageRenderingModeAlwaysOriginal];
+        [_crownView setImage:[iconImage imageWithRenderingMode:UIImageRenderingModeAlwaysTemplate]];
+        _crownView.transform = CGAffineTransformMakeRotation(-M_PI/4);
+        _crownView.tintColor = [UIColor systemYellowColor];
+        _crownView.alpha = 0.5;
+    }
+    return _crownView;
+}
+
 
 @end
