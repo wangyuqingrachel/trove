@@ -83,7 +83,7 @@
 - (void)collectionView:(UICollectionView *)collectionView didSelectItemAtIndexPath:(NSIndexPath *)selectedIndexPath
 {
     if (selectedIndexPath.item == 0) {
-        AddRecordViewController *vc = [[AddRecordViewController alloc] initWithBook:[TroveStorage getBook:self.bookTitle]];
+        AddRecordViewController *vc = [[AddRecordViewController alloc] initWithBook:self.bookTitle];
         [self.navigationController pushViewController:vc animated:YES];
     }
 }
@@ -100,7 +100,8 @@
         TroveRecordCell *cell = [collectionView dequeueReusableCellWithReuseIdentifier:[TroveRecordCell identifier] forIndexPath:indexPath];
         TroveRecordModel *model = self.dataSource[indexPath.item - 1];
         BOOL isEnd = [collectionView numberOfItemsInSection:0] - 1 == indexPath.item;
-        [cell configWithColor:[UIColor troveColorNamed:[TroveStorage getBook:self.bookTitle].color] recordModel:model isEnd:isEnd];
+        UIColor *color = [TroveSettings appliedDarkMode] ? [UIColor troveColorNamed:[TroveStorage getBook:self.bookTitle].color] : [UIColor trovePulseColorType:[TroveStorage getBook:self.bookTitle].color];
+        [cell configWithColor:color recordModel:model isEnd:isEnd];
         return cell;
     }
 }

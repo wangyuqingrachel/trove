@@ -15,7 +15,7 @@ static CGFloat const kPadding = 20;
 
 @interface AddRecordViewController ()<UIPickerViewDataSource, UIPickerViewDelegate, UIGestureRecognizerDelegate>
 
-@property (nonatomic, strong) TroveBookModel *book;
+@property (nonatomic, strong) NSString *bookTitle;
 @property (nonatomic, assign) NSInteger lastReadTo;
 @property (nonatomic, strong) UIDatePicker *datePicker;
 @property (nonatomic, strong) UIPickerView *pagePicker;
@@ -27,22 +27,35 @@ static CGFloat const kPadding = 20;
 
 @implementation AddRecordViewController
 
-- (instancetype)initWithBook:(TroveBookModel *)book
+- (instancetype)initWithBook:(NSString *)bookTitle
 {
     self = [super init];
     if (self) {
-        self.book = book;
+        [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(restartVC) name:TroveSwitchThemeNotification object:nil];
+        self.bookTitle = bookTitle;
         self.lastReadTo = 0;
-        if (self.book.records.count > 0) {
-            self.lastReadTo = [self.book.records[0].page integerValue];
+        if ([TroveStorage getBook:bookTitle].records.count > 0) {
+            self.lastReadTo = [[TroveStorage getBook:self.bookTitle].records[0].page integerValue];
         }
-        self.view.backgroundColor = [UIColor troveColorNamed:book.color];
         UITapGestureRecognizer *tapRecognizer = [UITapGestureRecognizer new];
         [tapRecognizer addTarget:self action:@selector(dismissKeyboard)];
         [self.view addGestureRecognizer:tapRecognizer];
     }
     return self;
 }
+
+- (void)restartVC
+{
+    // 将vc.view里的所有subviews全部置为nil
+    self.datePicker = nil;
+    self.pagePicker = nil;
+    self.noteField = nil;
+    self.saveButton = nil;
+    // 将vc.view里的所有subviews从父view上移除
+    [self.view.subviews makeObjectsPerformSelector:@selector(removeFromSuperview)];
+    [self p_setupUI];
+}
+
 
 - (void)viewDidLoad {
     [super viewDidLoad];
@@ -51,6 +64,7 @@ static CGFloat const kPadding = 20;
 
 - (void)p_setupUI
 {
+    self.view.backgroundColor = [UIColor troveColorNamed:[TroveStorage getBook:self.bookTitle].color];
     [self.view addSubview:self.datePicker];
     [self.datePicker mas_makeConstraints:^(MASConstraintMaker *make) {
         make.left.offset(kPadding);
@@ -91,7 +105,7 @@ static CGFloat const kPadding = 20;
 {
     self.brandNewRecord.date = self.datePicker.date; //更新date
     self.brandNewRecord.note = self.noteField.text; //更新note
-    [TroveStorage addRecord:self.brandNewRecord toBook:self.book.bookTitle];
+    [TroveStorage addRecord:self.brandNewRecord toBook:self.bookTitle];
     [self.navigationController popViewControllerAnimated:YES];
 }
 
@@ -103,7 +117,7 @@ static CGFloat const kPadding = 20;
 }
 - (NSInteger)pickerView:(UIPickerView *)pickerView numberOfRowsInComponent:(NSInteger)component
 {
-    return [self.book.totalPages integerValue] - self.lastReadTo;
+    return [[TroveStorage getBook:self.bookTitle].totalPages integerValue] - self.lastReadTo;
 }
 
 - (CGFloat)pickerView:(UIPickerView *)pickerView widthForComponent:(NSInteger)component
@@ -139,9 +153,10 @@ static CGFloat const kPadding = 20;
     if (!_datePicker) {
         _datePicker = [UIDatePicker new];
         _datePicker.datePickerMode = UIDatePickerModeDateAndTime;
-        _datePicker.tintColor = [UIColor troveColorNamed:self.book.color];
-        if (self.book.records.count > 0) {
-            _datePicker.minimumDate = self.book.records[0].date;
+        TroveBookModel *book = [TroveStorage getBook:self.bookTitle];
+        _datePicker.tintColor = [UIColor troveColorNamed:book.color];
+        if (book.records.count > 0) {
+            _datePicker.minimumDate = book.records[0].date;
         }
     }
     return _datePicker;

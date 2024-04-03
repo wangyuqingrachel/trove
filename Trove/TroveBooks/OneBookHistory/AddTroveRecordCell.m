@@ -62,7 +62,7 @@ static CGFloat const kPlusWidth = 30;
     self.label.text = @"add new record";
     [self.label mas_makeConstraints:^(MASConstraintMaker *make) {
         make.left.offset(kTextLeftMagin);
-        make.centerY.mas_equalTo(self.line);
+        make.centerY.offset(0);
     }];
 
 
