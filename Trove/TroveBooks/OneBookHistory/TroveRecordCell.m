@@ -40,6 +40,8 @@ static CGFloat const kPlusWidth = 20;
         make.left.offset(kLeftMagin);
         make.width.mas_equalTo(kLineWidth);
         make.top.offset(0);
+    }];
+    [self.line mas_updateConstraints:^(MASConstraintMaker *make) { // 动态的constraint必须这样写，否则不会更新
         make.bottom.offset(isEnd ? -self.frame.size.height/2 : 0);
     }];
     // icon

@@ -89,7 +89,7 @@ static CGFloat const kPercentageWidth = 45; // 100%的长度
     [self.progressBar mas_makeConstraints:^(MASConstraintMaker *make) {
         make.left.top.bottom.offset(0);
     }];
-    [self.progressBar mas_updateConstraints:^(MASConstraintMaker *make) { // 宽度的constraint必须这样写，否则在添加新的record后progress的长度不会更新
+    [self.progressBar mas_updateConstraints:^(MASConstraintMaker *make) { // 动态的constraint必须这样写，否则不会更新
         make.width.mas_equalTo(holderWidth * percentage);
     }];
     // percentage tag
