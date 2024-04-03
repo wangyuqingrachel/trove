@@ -31,6 +31,7 @@
         [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(restartVC) name:TroveSwitchThemeNotification object:nil];
         [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(reloadData) name:TroveBookCreateNotification object:nil];
         [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(reloadData) name:TroveBookEditNotification object:nil];
+        [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(reloadData) name:TroveRecordAddNotification object:nil];
     }
     return self;
 }
@@ -43,6 +44,7 @@
 
 - (void)reloadData
 {
+    self.dataSource = [TroveStorage retriveTroveBooks];
     [self.collectionView reloadData];
 }
 

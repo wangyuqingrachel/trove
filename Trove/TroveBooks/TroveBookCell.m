@@ -14,15 +14,15 @@ static CGFloat const kLeftRight = 10;
 static CGFloat const kSpace = 10;
 static CGFloat const kMajorElement = 20;
 static CGFloat const kMinorElement = 16;
-static CGFloat const kPercentageWidth = 40;
+static CGFloat const kPercentageWidth = 45; // 100%的长度
 
 @interface TroveBookCell ()
 
-@property (nonatomic, strong) UILabel *titleLabel; // "Game of Thrones"
-@property (nonatomic, strong) UILabel *totalPageLabel; // 985 pages in total
+@property (nonatomic, strong) UILabel *titleLabel;
+@property (nonatomic, strong) UILabel *totalPageLabel;
 @property (nonatomic, strong) UIView *progressBarHolder;
 @property (nonatomic, strong) UIView *progressBar;
-@property (nonatomic, strong) UILabel *percentageLabel; // 87%
+@property (nonatomic, strong) UILabel *percentageLabel;
 
 @property (nonatomic, strong) UIImageView *crownView;
 
@@ -60,7 +60,7 @@ static CGFloat const kPercentageWidth = 40;
         make.height.mas_equalTo(kMajorElement);
     }];
     // Total pages
-    NSString *currentPage = book.records.count ? [book.records[book.records.count - 1].page stringValue] : @"0";
+    NSString *currentPage = book.records.count ? [book.records[0].page stringValue] : @"0";
     NSString *totalPages = [book.totalPages stringValue];
     self.totalPageLabel.text = [[currentPage stringByAppendingString:@"/"] stringByAppendingString:totalPages];
     [self addSubview:self.totalPageLabel];
@@ -70,27 +70,27 @@ static CGFloat const kPercentageWidth = 40;
         make.height.mas_equalTo(kMajorElement);
     }];
     // Bar holder
+    CGFloat holderWidth = self.frame.size.width - 3*kSpace - kPercentageWidth;
     [self addSubview:self.progressBarHolder];
     [self.progressBarHolder mas_makeConstraints:^(MASConstraintMaker *make) {
         make.left.offset(kLeftRight);
-        make.width.mas_equalTo(self.frame.size.width - 3*kSpace - kPercentageWidth);
+        make.width.mas_equalTo(holderWidth);
         make.top.mas_equalTo(self.titleLabel.mas_bottom).offset(10);
         make.height.mas_equalTo(kMajorElement);
     }];
     // Bar
-    [self addSubview:self.progressBar];
-//    CGFloat percentage = book.records.count ? [book.records[book.records.count - 1].page doubleValue] / [book.totalPages doubleValue] : 0;
-    CGFloat percentage = 0.8875498745; //gizmo
+    CGFloat percentage = book.records.count ? [book.records[0].page doubleValue] / [book.totalPages doubleValue] : 0;
     if (percentage >= 1) {
         percentage = 1;
         self.crownView.hidden = NO;
     }
-    _progressBar.backgroundColor = [UIColor trovePulseColorType:book.color];
+    [self.progressBarHolder addSubview:self.progressBar];
+    self.progressBar.backgroundColor = [UIColor trovePulseColorType:book.color];
     [self.progressBar mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.left.offset(kLeftRight);
-        make.width.mas_equalTo((self.frame.size.width - 3*kSpace - kPercentageWidth) * percentage);
-        make.top.mas_equalTo(self.titleLabel.mas_bottom).offset(10);
-        make.height.mas_equalTo(kMajorElement);
+        make.left.top.bottom.offset(0);
+    }];
+    [self.progressBar mas_updateConstraints:^(MASConstraintMaker *make) { // 宽度的constraint必须这样写，否则在添加新的record后progress的长度不会更新
+        make.width.mas_equalTo(holderWidth * percentage);
     }];
     // percentage tag
     self.percentageLabel.text = [[@(round(percentage * 100)) stringValue] stringByAppendingString:@"%"];
