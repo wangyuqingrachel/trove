@@ -12,10 +12,11 @@
 #import <Masonry/Masonry.h>
 #import "AddRecordViewController.h"
 #import "TroveSettings.h"
+#import "TroveStorage.h"
 
 @interface RecordsViewController ()<UICollectionViewDelegate, UICollectionViewDataSource, UICollectionViewDelegateFlowLayout>
 
-@property (nonatomic, strong) TroveBookModel *book;
+@property (nonatomic, strong) NSString *bookTitle;
 @property (nonatomic, strong) NSMutableArray<TroveRecordModel *> *dataSource;
 @property (nonatomic, strong) UICollectionView *collectionView;
 
@@ -23,14 +24,14 @@
 
 @implementation RecordsViewController
 
-- (instancetype)initWithBook:(TroveBookModel *)book
+- (instancetype)initWithBookTitle:(NSString *)bookTitle
 {
     self = [super init];
     if (self) {
         [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(restartVC) name:TroveSwitchThemeNotification object:nil];
-        [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(reloadData) name:TroveSwitchThemeNotification object:nil];
-        self.book = book;
-        self.dataSource = book.records;
+        [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(reloadData) name:TroveRecordAddNotification object:nil];
+        self.bookTitle = bookTitle;
+        self.dataSource = [TroveStorage getBook:self.bookTitle].records;
     }
     return self;
 }
@@ -43,6 +44,7 @@
 
 - (void)reloadData
 {
+    self.dataSource = [TroveStorage getBook:self.bookTitle].records;
     [self.collectionView reloadData];
 }
 
@@ -67,7 +69,7 @@
     // background
     self.view.backgroundColor = [UIColor troveColorNamed:TroveColorTypeBackground];
     // navi title
-    self.navigationItem.title = self.book.bookTitle;
+    self.navigationItem.title = self.bookTitle;
     // collection view
     [self.view addSubview:self.collectionView];
     [self.collectionView mas_makeConstraints:^(MASConstraintMaker *make) {
@@ -81,7 +83,7 @@
 - (void)collectionView:(UICollectionView *)collectionView didSelectItemAtIndexPath:(NSIndexPath *)selectedIndexPath
 {
     if (selectedIndexPath.item == 0) {
-        AddRecordViewController *vc = [[AddRecordViewController alloc] initWithBook:self.book];
+        AddRecordViewController *vc = [[AddRecordViewController alloc] initWithBook:[TroveStorage getBook:self.bookTitle]];
         [self.navigationController pushViewController:vc animated:YES];
     }
 }
@@ -90,13 +92,13 @@
 {
     if (indexPath.item == 0) {
         AddTroveRecordCell *cell = [collectionView dequeueReusableCellWithReuseIdentifier:[AddTroveRecordCell identifier] forIndexPath:indexPath];
-        UIColor *color = [TroveSettings appliedDarkMode] ? [UIColor troveColorNamed:self.book.color] : [UIColor trovePulseColorType:self.book.color];
+        UIColor *color = [TroveSettings appliedDarkMode] ? [UIColor troveColorNamed:[TroveStorage getBook:self.bookTitle].color] : [UIColor trovePulseColorType:[TroveStorage getBook:self.bookTitle].color];
         [cell configWithColor:color];
         return cell;
     } else {
         TroveRecordCell *cell = [collectionView dequeueReusableCellWithReuseIdentifier:[TroveRecordCell identifier] forIndexPath:indexPath];
         TroveRecordModel *model = self.dataSource[indexPath.item - 1];
-        [cell configWithColor:[UIColor troveColorNamed:self.book.color] recordModel:model];
+        [cell configWithColor:[UIColor troveColorNamed:[TroveStorage getBook:self.bookTitle].color] recordModel:model];
         return cell;
     }
 }

@@ -59,6 +59,16 @@
     }
 }
 
++ (TroveBookModel *)getBook:(NSString *)bookTitle
+{
+    NSMutableArray <TroveBookModel *> *books = [TroveStorage retriveTroveBooks];
+    for (int i=0; i<books.count; i++) {
+        if ([books[i].bookTitle isEqualToString:bookTitle]) {
+            return books[i];
+        }
+    }
+    return [TroveBookModel new];
+}
 
 + (BOOL)bookNameExists:(NSString *)newBookName
 {

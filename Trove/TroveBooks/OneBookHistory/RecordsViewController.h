@@ -12,7 +12,7 @@ NS_ASSUME_NONNULL_BEGIN
 
 @interface RecordsViewController : UIViewController
 
-- (instancetype)initWithBook:(TroveBookModel *)book;
+- (instancetype)initWithBookTitle:(NSString *)bookTitle;
 
 @end
 

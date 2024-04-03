@@ -186,7 +186,7 @@ static CGFloat const kPadding = 20;
 - (TroveRecordModel *)brandNewRecord
 {
     if (!_brandNewRecord) {
-        _brandNewRecord = [[TroveRecordModel alloc] initWithDate:self.datePicker.date page:@(self.lastReadTo) note:@""];
+        _brandNewRecord = [[TroveRecordModel alloc] initWithDate:self.datePicker.date page:@(self.lastReadTo+1) note:@""];
     }
     return _brandNewRecord;
 }

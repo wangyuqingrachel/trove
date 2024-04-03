@@ -100,7 +100,7 @@
 
 - (void)collectionView:(UICollectionView *)collectionView didSelectItemAtIndexPath:(NSIndexPath *)selectedIndexPath
 {
-    RecordsViewController *vc = [[RecordsViewController alloc] initWithBook:self.dataSource[selectedIndexPath.item]];
+    RecordsViewController *vc = [[RecordsViewController alloc] initWithBookTitle:self.dataSource[selectedIndexPath.item].bookTitle];
     [self.navigationController pushViewController:vc animated:YES];
 }
 

@@ -17,6 +17,8 @@ NS_ASSUME_NONNULL_BEGIN
 + (void)editBook:(NSString *)originalname toBook:(TroveBookModel *)newbook;
 + (void)addRecord:(TroveRecordModel *)record toBook:(NSString *)bookTitle;
 
++ (TroveBookModel *)getBook:(NSString *)bookTitle;
+
 + (BOOL)bookNameExists:(NSString *)newBookName;
 + (void)saveTroveBooks:(NSMutableArray<TroveBookModel *> *)books; // 归档
 + (NSMutableArray<TroveBookModel *> *)retriveTroveBooks; // 解档
