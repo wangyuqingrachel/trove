@@ -64,6 +64,7 @@ static CGFloat const kHeightRatio = 0.8;
     if (!booknameEmpty && !booknameInvalid && !bookpagesEmpty && !bookpageInvalid) {
         [self dismissViewControllerAnimated:YES completion:^{
             self.brandNewBookModel.bookTitle = booktitle; //taskname退出时更新
+            self.brandNewBookModel.totalPages = pages;
             [TroveStorage createBook:self.brandNewBookModel];
         }];
     } else if (booknameEmpty) {

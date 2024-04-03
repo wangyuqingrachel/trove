@@ -6,13 +6,12 @@
 //
 
 #import "UIColor+TroveColor.h"
-#import "TroveSettings.h"
 
 @implementation UIColor (TroveColor)
 
 + (UIColor *)troveColorNamed:(TroveColorType)colorType
 {
-    BOOL isLight = ![TroveSettings appliedDarkMode];
+    BOOL isLight = [UIScreen mainScreen].traitCollection.userInterfaceStyle != UIUserInterfaceStyleDark;
     switch (colorType) {
         case TroveColorTypeBackground:
             return isLight ? [UIColor whiteColor] : [UIColor blackColor];

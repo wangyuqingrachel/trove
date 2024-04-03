@@ -9,8 +9,6 @@
 #import <Masonry/Masonry.h>
 #import "TroveMacro.h"
 #import "TroveBookCell.h"
-#import "AddNewBookCell.h"
-#import "HistoryViewController.h"
 #import "TroveStorage.h"
 #import "UIColor+TroveColor.h"
 #import "AddBookViewController.h"
@@ -23,6 +21,20 @@
 @end
 
 @implementation ViewController
+
+- (instancetype)init
+{
+    self = [super init];
+    if (self) {
+        [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(reloadData) name:TroveBookCreateNotification object:nil];
+    }
+    return self;
+}
+
+- (void)reloadData
+{
+    [self.collectionView reloadData];
+}
 
 - (void)viewDidLoad {
     [super viewDidLoad];
@@ -47,9 +59,10 @@
     // background
     self.view.backgroundColor = [UIColor troveColorNamed:TroveColorTypeBackground];
     // navi button
-    UIImage *iconImage = [[UIImage systemImageNamed:@"calendar"]  imageWithRenderingMode:UIImageRenderingModeAlwaysTemplate];
+    UIImage *iconImage = [[UIImage systemImageNamed:@"plus"]  imageWithRenderingMode:UIImageRenderingModeAlwaysTemplate];
     UIBarButtonItem *historyButton = [[UIBarButtonItem alloc] initWithImage:iconImage style:UIBarButtonItemStylePlain target:self action:@selector(goToHistory)];
     self.navigationItem.rightBarButtonItem = historyButton;
+    self.navigationController.navigationBar.tintColor = [UIColor troveColorNamed:TroveColorTypeText];
     // collection view
     [self.view addSubview:self.collectionView];
     [self.collectionView mas_makeConstraints:^(MASConstraintMaker *make) {
@@ -62,7 +75,8 @@
 
 - (void)goToHistory
 {
-    [self.navigationController pushViewController:[HistoryViewController new] animated:YES];
+    AddBookViewController *addVC = [AddBookViewController new];
+    [self.navigationController presentViewController:addVC animated:YES completion:nil];
 }
 
 - (void)fieldsChange
@@ -95,37 +109,26 @@
 
 - (void)collectionView:(UICollectionView *)collectionView didSelectItemAtIndexPath:(NSIndexPath *)selectedIndexPath
 {
-    if (selectedIndexPath.item == [self.collectionView numberOfItemsInSection:0] - 1) { //最后一个cell
-        AddBookViewController *addVC = [AddBookViewController new];
-        [self.navigationController presentViewController:addVC animated:YES completion:nil];
-    } else {
 
-    }
 }
 
 - (__kindof UICollectionViewCell *)collectionView:(UICollectionView *)collectionView cellForItemAtIndexPath:(NSIndexPath *)indexPath
 {
-    if (indexPath.item == [self.collectionView numberOfItemsInSection:0] - 1) { //最后一个cell
-        AddNewBookCell *cell = [collectionView dequeueReusableCellWithReuseIdentifier:[AddNewBookCell identifier] forIndexPath:indexPath];
-        [cell config];
-        return cell;
-    } else {
-        TroveBookCell *cell = [collectionView dequeueReusableCellWithReuseIdentifier:[TroveBookCell identifier] forIndexPath:indexPath];
-        TroveBookModel *model = self.dataSource[indexPath.item];
-        [cell configWithBookModel:model];
-        return cell;
-    }
+    TroveBookCell *cell = [collectionView dequeueReusableCellWithReuseIdentifier:[TroveBookCell identifier] forIndexPath:indexPath];
+    TroveBookModel *model = self.dataSource[indexPath.item];
+    [cell configWithBookModel:model];
+    return cell;
 }
 
 - (NSInteger)collectionView:(UICollectionView *)collectionView numberOfItemsInSection:(NSInteger)section
 {
     self.dataSource = [TroveStorage retriveTroveBooks];
-    return self.dataSource.count + 1;
+    return self.dataSource.count;
 }
 
 - (CGSize)collectionView:(UICollectionView *)collectionView layout:(UICollectionViewLayout *)collectionViewLayout sizeForItemAtIndexPath:(NSIndexPath *)indexPath
 {
-    return CGSizeMake(kScreenWidth, [TroveBookCell cellHeight]); // cell size
+    return CGSizeMake(kScreenWidth - 20, [TroveBookCell cellHeight]); // cell size
 }
 
 - (CGFloat)collectionView:(UICollectionView *)collectionView layout:(UICollectionViewLayout *)collectionViewLayout minimumInteritemSpacingForSectionAtIndex:(NSInteger)section
@@ -153,12 +156,12 @@
 
 - (CGSize)collectionView:(UICollectionView *)collectionView layout:(UICollectionViewLayout *)collectionViewLayout referenceSizeForHeaderInSection:(NSInteger)section
 {
-    return CGSizeMake(kScreenWidth, 10); // header
+    return CGSizeMake(kScreenWidth, 0); // header
 }
 
 - (CGSize)collectionView:(UICollectionView *)collectionView layout:(UICollectionViewLayout *)collectionViewLayout referenceSizeForFooterInSection:(NSInteger)section
 {
-    return CGSizeMake(kScreenWidth, 10); // footer
+    return CGSizeMake(kScreenWidth, 0); // footer
 }
 
 #pragma mark - Getters
@@ -173,7 +176,6 @@
         _collectionView.backgroundColor = self.view.backgroundColor;
 
         [_collectionView registerClass:[TroveBookCell class] forCellWithReuseIdentifier:[TroveBookCell identifier]];
-        [_collectionView registerClass:[AddNewBookCell class] forCellWithReuseIdentifier:[AddNewBookCell identifier]];
         [_collectionView registerClass:[UICollectionViewCell class] forSupplementaryViewOfKind:UICollectionElementKindSectionHeader withReuseIdentifier:@"header"];
         [_collectionView registerClass:[UICollectionViewCell class] forSupplementaryViewOfKind:UICollectionElementKindSectionFooter withReuseIdentifier:@"footer"];
     }

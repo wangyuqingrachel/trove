@@ -14,7 +14,7 @@
 + (void)createBook:(TroveBookModel *)newbook
 {
     NSMutableArray <TroveBookModel *> *books = [TroveStorage retriveTroveBooks];
-    [books addObject:newbook];
+    [books insertObject:newbook atIndex:0];
     NSLog(@"Create");
     [TroveStorage saveTroveBooks:books];
     [[NSNotificationCenter defaultCenter] postNotificationName:TroveBookCreateNotification object:nil userInfo:nil];
