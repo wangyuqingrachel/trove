@@ -13,12 +13,12 @@
 #import "UIColor+TroveColor.h"
 #import "AddBookViewController.h"
 #import "EditBookViewController.h"
+#import "RecordsViewController.h"
 
 @interface ViewController () <UICollectionViewDelegate, UICollectionViewDataSource, UICollectionViewDelegateFlowLayout, UIViewControllerTransitioningDelegate>
 
 @property (nonatomic, strong) NSMutableArray<TroveBookModel *> *dataSource;
 @property (nonatomic, strong) UICollectionView *collectionView;
-
 
 @end
 
@@ -70,8 +70,8 @@
     self.view.backgroundColor = [UIColor troveColorNamed:TroveColorTypeBackground];
     // navi button
     UIImage *iconImage = [[UIImage systemImageNamed:@"plus"]  imageWithRenderingMode:UIImageRenderingModeAlwaysTemplate];
-    UIBarButtonItem *historyButton = [[UIBarButtonItem alloc] initWithImage:iconImage style:UIBarButtonItemStylePlain target:self action:@selector(addNewBook)];
-    self.navigationItem.rightBarButtonItem = historyButton;
+    UIBarButtonItem *addBookBotton = [[UIBarButtonItem alloc] initWithImage:iconImage style:UIBarButtonItemStylePlain target:self action:@selector(addNewBook)];
+    self.navigationItem.rightBarButtonItem = addBookBotton;
     self.navigationController.navigationBar.tintColor = [UIColor troveColorNamed:TroveColorTypeText];
     // collection view
     [self.view addSubview:self.collectionView];
@@ -100,7 +100,8 @@
 
 - (void)collectionView:(UICollectionView *)collectionView didSelectItemAtIndexPath:(NSIndexPath *)selectedIndexPath
 {
-
+    RecordsViewController *vc = [[RecordsViewController alloc] initWithBook:self.dataSource[selectedIndexPath.item]];
+    [self.navigationController pushViewController:vc animated:YES];
 }
 
 - (__kindof UICollectionViewCell *)collectionView:(UICollectionView *)collectionView cellForItemAtIndexPath:(NSIndexPath *)indexPath
