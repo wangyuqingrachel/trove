@@ -13,7 +13,10 @@ NS_ASSUME_NONNULL_BEGIN
 #define kScreenWidth [UIScreen mainScreen].bounds.size.width
 #define kScreenHeight [UIScreen mainScreen].bounds.size.height
 
-// 通知
+// Settings
+#define TroveSwitchThemeNotification @"TroveSwitchThemeNotification"
+
+// Data
 #define TroveBookCreateNotification @"TroveBookCreateNotification"
 
 // 系统声音 1050 - 1200 都还可以

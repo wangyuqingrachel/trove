@@ -7,6 +7,8 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		4A2B85762BB0270C0039AD22 /* UIColor+TroveColor.m in Sources */ = {isa = PBXBuildFile; fileRef = 4A2B85752BB0270C0039AD22 /* UIColor+TroveColor.m */; };
+		4A2B85792BB027720039AD22 /* TroveSettings.m in Sources */ = {isa = PBXBuildFile; fileRef = 4A2B85772BB027720039AD22 /* TroveSettings.m */; };
 		4A37951E2BAA9ED800E400DB /* TroveBookCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 4A37951D2BAA9ED800E400DB /* TroveBookCell.m */; };
 		4A3795272BAAA94F00E400DB /* TroveMacro.m in Sources */ = {isa = PBXBuildFile; fileRef = 4A3795262BAAA94F00E400DB /* TroveMacro.m */; };
 		4A37952A2BAAAACC00E400DB /* HistoryViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 4A3795292BAAAACC00E400DB /* HistoryViewController.m */; };
@@ -24,6 +26,10 @@
 
 /* Begin PBXFileReference section */
 		371372246D8F2C8610E2581F /* Pods-Trove.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Trove.debug.xcconfig"; path = "Target Support Files/Pods-Trove/Pods-Trove.debug.xcconfig"; sourceTree = "<group>"; };
+		4A2B85742BB0270C0039AD22 /* UIColor+TroveColor.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIColor+TroveColor.h"; sourceTree = "<group>"; };
+		4A2B85752BB0270C0039AD22 /* UIColor+TroveColor.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIColor+TroveColor.m"; sourceTree = "<group>"; };
+		4A2B85772BB027720039AD22 /* TroveSettings.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TroveSettings.m; sourceTree = "<group>"; };
+		4A2B85782BB027720039AD22 /* TroveSettings.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TroveSettings.h; sourceTree = "<group>"; };
 		4A37951C2BAA9ED800E400DB /* TroveBookCell.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = TroveBookCell.h; sourceTree = "<group>"; };
 		4A37951D2BAA9ED800E400DB /* TroveBookCell.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = TroveBookCell.m; sourceTree = "<group>"; };
 		4A3795252BAAA94F00E400DB /* TroveMacro.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = TroveMacro.h; sourceTree = "<group>"; };
@@ -112,6 +118,10 @@
 			children = (
 				4A3795252BAAA94F00E400DB /* TroveMacro.h */,
 				4A3795262BAAA94F00E400DB /* TroveMacro.m */,
+				4A2B85782BB027720039AD22 /* TroveSettings.h */,
+				4A2B85772BB027720039AD22 /* TroveSettings.m */,
+				4A2B85742BB0270C0039AD22 /* UIColor+TroveColor.h */,
+				4A2B85752BB0270C0039AD22 /* UIColor+TroveColor.m */,
 			);
 			path = TroveCustomize;
 			sourceTree = "<group>";
@@ -283,12 +293,14 @@
 			files = (
 				4A37951E2BAA9ED800E400DB /* TroveBookCell.m in Sources */,
 				4A3795272BAAA94F00E400DB /* TroveMacro.m in Sources */,
+				4A2B85762BB0270C0039AD22 /* UIColor+TroveColor.m in Sources */,
 				4A8614C32BAABA9E00BDF693 /* TroveRecordModel.m in Sources */,
 				4A6D504C2BAA7FE3008F7298 /* ViewController.m in Sources */,
 				4A8614C62BAABB9700BDF693 /* TroveStorage.m in Sources */,
 				4A6D50462BAA7FE3008F7298 /* AppDelegate.m in Sources */,
 				4A6D50572BAA7FE7008F7298 /* main.m in Sources */,
 				4A37952A2BAAAACC00E400DB /* HistoryViewController.m in Sources */,
+				4A2B85792BB027720039AD22 /* TroveSettings.m in Sources */,
 				4A6D50492BAA7FE3008F7298 /* SceneDelegate.m in Sources */,
 				4A8614C02BAABA3C00BDF693 /* TroveBookModel.m in Sources */,
 				4A8614CC2BAABFE500BDF693 /* AddNewBookCell.m in Sources */,

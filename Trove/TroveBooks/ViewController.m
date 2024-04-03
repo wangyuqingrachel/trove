@@ -12,6 +12,7 @@
 #import "AddNewBookCell.h"
 #import "HistoryViewController.h"
 #import "TroveStorage.h"
+#import "UIColor+TroveColor.h"
 
 @interface ViewController () <UICollectionViewDelegate, UICollectionViewDataSource, UICollectionViewDelegateFlowLayout, UIViewControllerTransitioningDelegate>
 
@@ -44,7 +45,7 @@
 - (void)p_setupUI
 {
     // background
-    self.view.backgroundColor = [UIColor systemRedColor];
+    self.view.backgroundColor = [UIColor troveColorNamed:TroveColorTypeBackground];
     // navi button
     UIImage *iconImage = [[UIImage systemImageNamed:@"calendar"]  imageWithRenderingMode:UIImageRenderingModeAlwaysTemplate];
     UIBarButtonItem *historyButton = [[UIBarButtonItem alloc] initWithImage:iconImage style:UIBarButtonItemStylePlain target:self action:@selector(goToHistory)];
@@ -72,7 +73,7 @@
 
     [alertController addTextFieldWithConfigurationHandler:^(UITextField *textField) {
         textField.placeholder = @"Book Title";
-        textField.textColor = [UIColor blackColor];
+        textField.textColor = [UIColor troveColorNamed:TroveColorTypeText];
         textField.clearButtonMode = UITextFieldViewModeWhileEditing;
         textField.borderStyle = UITextBorderStyleRoundedRect;
         textField.keyboardType = UIKeyboardTypeDefault;
@@ -80,7 +81,7 @@
     }];
     [alertController addTextFieldWithConfigurationHandler:^(UITextField *textField) {
         textField.placeholder = @"Total Pages";
-        textField.textColor = [UIColor blackColor];
+        textField.textColor = [UIColor troveColorNamed:TroveColorTypeText];
         textField.clearButtonMode = UITextFieldViewModeWhileEditing;
         textField.borderStyle = UITextBorderStyleRoundedRect;
         textField.keyboardType = UIKeyboardTypeDecimalPad;
