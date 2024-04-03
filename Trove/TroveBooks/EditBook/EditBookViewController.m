@@ -1,12 +1,11 @@
 //
-//  AddBookViewController.m
+//  EditBookViewController.m
 //  Trove
 //
 //  Created by Yuqing Wang on 2024/4/3.
 //
 
-#import "AddBookViewController.h"
-#import "TroveBookModel.h"
+#import "EditBookViewController.h"
 #import "ColorCollectionViewCell.h"
 #import "TroveMacro.h"
 #import "TroveStorage.h"
@@ -15,20 +14,34 @@
 static CGFloat const kAddTaskVCPadding = 20;
 static CGFloat const kHeightRatio = 0.8;
 
-@interface AddBookViewController ()<UICollectionViewDelegate, UICollectionViewDataSource, UICollectionViewDelegateFlowLayout, UIGestureRecognizerDelegate>
+@interface EditBookViewController ()<UICollectionViewDelegate, UICollectionViewDataSource, UICollectionViewDelegateFlowLayout, UIGestureRecognizerDelegate>
 
-@property (nonatomic, strong) TroveBookModel *brandNewBookModel; //新创建的task，由于OC不允许使用new作为property的前缀，这里使用了brand new
+@property (nonatomic, strong) NSString *originalTitle;
+@property (nonatomic, strong) TroveBookModel *book; //新创建的task，由于OC不允许使用new作为property的前缀，这里使用了brand new
 @property (nonatomic, strong) UITextField *enterBookNameTextField;
 @property (nonatomic, strong) UITextField *enterBookPageTextField;
 @property (nonatomic, strong) UICollectionView *collectionView;
 @property (nonatomic, strong) NSArray<TroveColorModel *> *colorBlocks;
 @property (nonatomic, strong) UIButton *discardButton;
-@property (nonatomic, strong) UIButton *createButton;
+@property (nonatomic, strong) UIButton *saveButton;
 
 
 @end
 
-@implementation AddBookViewController
+@implementation EditBookViewController
+
+- (instancetype)initWithBook:(TroveBookModel *)book
+{
+    self = [super init];
+    if (self) {
+        self.originalTitle = book.bookTitle;
+        self.book = book;
+        self.view.backgroundColor = [UIColor troveColorNamed:book.color];
+        self.enterBookNameTextField.text = book.bookTitle;
+        self.enterBookPageTextField.text = [book.totalPages stringValue];
+    }
+    return self;
+}
 
 - (void)viewDidLoad {
     [super viewDidLoad];
@@ -48,12 +61,12 @@ static CGFloat const kHeightRatio = 0.8;
     [self.view.superview addGestureRecognizer:tapRecognizer];
 }
 
-- (void)clickCreateButton
+- (void)clickSaveButton
 {
     // BOOK NAME
     NSString *booktitle = self.enterBookNameTextField.text;
     BOOL booknameEmpty = !booktitle || [booktitle isEqualToString:@""];
-    BOOL booknameInvalid = [TroveStorage bookNameExists:booktitle];
+    BOOL booknameInvalid = [TroveStorage bookNameExists:booktitle] && ![booktitle isEqualToString:self.originalTitle];
     // BOOK PAGES
     NSString *bookpages = self.enterBookPageTextField.text;
     BOOL bookpagesEmpty = !bookpages || [bookpages isEqualToString:@""];
@@ -63,9 +76,9 @@ static CGFloat const kHeightRatio = 0.8;
     BOOL bookpageInvalid = !pages;
     if (!booknameEmpty && !booknameInvalid && !bookpagesEmpty && !bookpageInvalid) {
         [self dismissViewControllerAnimated:YES completion:^{
-            self.brandNewBookModel.bookTitle = booktitle; //taskname退出时更新
-            self.brandNewBookModel.totalPages = pages;
-            [TroveStorage createBook:self.brandNewBookModel];
+            self.book.bookTitle = booktitle; //taskname退出时更新
+            self.book.totalPages = pages;
+            [TroveStorage editBook:self.originalTitle toBook:self.book];
         }];
     } else if (booknameEmpty) {
         UIAlertController* newNameIsEmptyAlert = [UIAlertController alertControllerWithTitle:@"bookname_cannot_be_empty" message:nil preferredStyle:UIAlertControllerStyleAlert];
@@ -99,7 +112,6 @@ static CGFloat const kHeightRatio = 0.8;
 
 - (void)p_setupUI
 {
-    self.view.backgroundColor = [UIColor troveColorNamed:self.brandNewBookModel.color];
     [self.view addSubview:self.enterBookNameTextField];
     [self.enterBookNameTextField mas_makeConstraints:^(MASConstraintMaker *make) {
         make.top.offset(20);
@@ -122,14 +134,14 @@ static CGFloat const kHeightRatio = 0.8;
     }];
     
     [self.view addSubview:self.discardButton];
-    [self.view addSubview:self.createButton];
+    [self.view addSubview:self.saveButton];
     [self.discardButton mas_makeConstraints:^(MASConstraintMaker *make) {
         make.top.mas_equalTo(self.collectionView.mas_bottom).offset(20);
         make.left.offset(kAddTaskVCPadding);
         make.width.mas_equalTo(kScreenWidth/2-kAddTaskVCPadding);
         make.height.mas_equalTo(40);
     }];
-    [self.createButton mas_makeConstraints:^(MASConstraintMaker *make) {
+    [self.saveButton mas_makeConstraints:^(MASConstraintMaker *make) {
         make.top.mas_equalTo(self.collectionView.mas_bottom).offset(20);
         make.left.mas_equalTo(self.discardButton.mas_right).offset(0);
         make.width.mas_equalTo(kScreenWidth/2-kAddTaskVCPadding);
@@ -143,7 +155,7 @@ static CGFloat const kHeightRatio = 0.8;
     // 选中某色块时，更新背景颜色为该色块颜色，更新model的颜色为该色块颜色
     TroveColorType selectedColor =  self.colorBlocks[indexPath.item].color;
     self.view.backgroundColor = [UIColor troveColorNamed:selectedColor];
-    self.brandNewBookModel.color = selectedColor; // 颜色实时更新
+    self.book.color = selectedColor; // 颜色实时更新
     [collectionView reloadData];
 }
 
@@ -156,7 +168,7 @@ static CGFloat const kHeightRatio = 0.8;
 {
     // 展示所有色块
     TroveColorModel *taskModel = (TroveColorModel *)self.colorBlocks[indexPath.item];
-    taskModel.isSelected = CGColorEqualToColor([UIColor troveColorNamed:taskModel.color].CGColor, [UIColor troveColorNamed:self.brandNewBookModel.color].CGColor); // 如果某色块和当前model的颜色一致，标记为选中
+    taskModel.isSelected = CGColorEqualToColor([UIColor troveColorNamed:taskModel.color].CGColor, [UIColor troveColorNamed:self.book.color].CGColor); // 如果某色块和当前model的颜色一致，标记为选中
     ColorCollectionViewCell *cell =[collectionView dequeueReusableCellWithReuseIdentifier:[ColorCollectionViewCell identifier] forIndexPath:indexPath];
     // 更新色块（颜色、是否选中）
     [cell configWithModel:taskModel];
@@ -197,16 +209,6 @@ static CGFloat const kHeightRatio = 0.8;
 }
 
 #pragma mark - Getters
-
-- (TroveBookModel *)brandNewBookModel
-{
-    if (!_brandNewBookModel) {
-        NSArray *allColorType = @[@(TroveColorTypeCellPink), @(TroveColorTypeCellOrange), @(TroveColorTypeCellYellow), @(TroveColorTypeCellGreen), @(TroveColorTypeCellTeal), @(TroveColorTypeCellBlue), @(TroveColorTypeCellPurple),@(TroveColorTypeCellGray)];
-        TroveColorType type = [allColorType[arc4random() % allColorType.count] integerValue]; // 随机生成一个颜色
-        _brandNewBookModel = [[TroveBookModel alloc] initWithTitle:@"Untitled" pages:@0 colorType:type];
-    }
-    return _brandNewBookModel;
-}
 
 - (UITextField *)enterBookNameTextField
 {
@@ -270,23 +272,23 @@ static CGFloat const kHeightRatio = 0.8;
     return @[pinkModel,orangeModel,yellowModel,greenModel,tealModel,blueModel,purpleModel,grayModel];
 }
 
-- (UIButton *)createButton
+- (UIButton *)saveButton
 {
-    if (!_createButton) {
-        _createButton = [UIButton new];
+    if (!_saveButton) {
+        _saveButton = [UIButton new];
         // icon
-        [_createButton setImage:[[UIImage systemImageNamed:@"checkmark.rectangle"] imageWithRenderingMode:UIImageRenderingModeAlwaysTemplate] forState:UIControlStateNormal];
-        _createButton.tintColor = [UIColor troveColorNamed:TroveColorTypeText];
+        [_saveButton setImage:[[UIImage systemImageNamed:@"checkmark.rectangle"] imageWithRenderingMode:UIImageRenderingModeAlwaysTemplate] forState:UIControlStateNormal];
+        _saveButton.tintColor = [UIColor troveColorNamed:TroveColorTypeText];
         // title
-        [_createButton setTitle:@"Create" forState:UIControlStateNormal];
-        [_createButton setTitleColor:[UIColor troveColorNamed:TroveColorTypeText] forState:UIControlStateNormal];
-        _createButton.titleLabel.font = [UIFont fontWithName:@"TrebuchetMS-Italic" size:20];
+        [_saveButton setTitle:@"Save" forState:UIControlStateNormal];
+        [_saveButton setTitleColor:[UIColor troveColorNamed:TroveColorTypeText] forState:UIControlStateNormal];
+        _saveButton.titleLabel.font = [UIFont fontWithName:@"TrebuchetMS-Italic" size:20];
         // padding
-        _createButton.titleEdgeInsets = UIEdgeInsetsMake(0, 20, 0, 0);
+        _saveButton.titleEdgeInsets = UIEdgeInsetsMake(0, 20, 0, 0);
         // action
-        [_createButton addTarget:self action:@selector(clickCreateButton) forControlEvents:UIControlEventTouchUpInside];
+        [_saveButton addTarget:self action:@selector(clickSaveButton) forControlEvents:UIControlEventTouchUpInside];
     }
-    return _createButton;
+    return _saveButton;
 }
 
 - (UIButton *)discardButton
@@ -317,3 +319,4 @@ static CGFloat const kHeightRatio = 0.8;
 
 
 @end
+

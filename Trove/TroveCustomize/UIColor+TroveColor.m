@@ -6,12 +6,13 @@
 //
 
 #import "UIColor+TroveColor.h"
+#import "TroveSettings.h"
 
 @implementation UIColor (TroveColor)
 
 + (UIColor *)troveColorNamed:(TroveColorType)colorType
 {
-    BOOL isLight = [UIScreen mainScreen].traitCollection.userInterfaceStyle != UIUserInterfaceStyleDark;
+    BOOL isLight = ![TroveSettings appliedDarkMode];
     switch (colorType) {
         case TroveColorTypeBackground:
             return isLight ? [UIColor whiteColor] : [UIColor blackColor];
@@ -25,9 +26,9 @@
             return isLight ? [UIColor trove_darkGray] : [UIColor trove_lightGray];
         case TroveColorTypeShadow:
             return [UIColor grayColor];
-        case TroveColorTypeAddTaskCellBG:
+        case TroveColorTypeProgressHolder:
             return isLight ? [UIColor colorWithRed:250/255.0 green:250/255.0 blue:250/255.0 alpha:1] : [UIColor colorWithRed:15/255.0 green:15/255.0 blue:15/255.0 alpha:1];
-        case TroveColorTypeAddTaskCellPlus:
+        case TroveColorTypeProgressHoderPulse:
             return isLight ? [UIColor colorWithRed:200/255.0 green: 200/255.0  blue:200/255.0 alpha:1] : [UIColor colorWithRed:55/255.0 green: 55/255.0  blue:55/255.0 alpha:1];
         case TroveColorTypeCellPink:
             return isLight ? [UIColor trove_lightPink] : [UIColor trove_darkPink];

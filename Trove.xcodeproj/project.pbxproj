@@ -21,6 +21,7 @@
 		4AD57BFA2BBD16F6009C9A4F /* AddBookViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 4AD57BF92BBD16F6009C9A4F /* AddBookViewController.m */; };
 		4AD57BFD2BBD17A1009C9A4F /* ColorCollectionViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 4AD57BFC2BBD17A1009C9A4F /* ColorCollectionViewCell.m */; };
 		4AD57C002BBD37E9009C9A4F /* TroveSettings.m in Sources */ = {isa = PBXBuildFile; fileRef = 4AD57BFF2BBD37E9009C9A4F /* TroveSettings.m */; };
+		4AD57C042BBD3E76009C9A4F /* EditBookViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 4AD57C032BBD3E76009C9A4F /* EditBookViewController.m */; };
 		9C1C2654F8A141CFDB69A5E5 /* Pods_Trove.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = DDEF260D28898925C4DBC851 /* Pods_Trove.framework */; };
 /* End PBXBuildFile section */
 
@@ -54,6 +55,8 @@
 		4AD57BFC2BBD17A1009C9A4F /* ColorCollectionViewCell.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ColorCollectionViewCell.m; sourceTree = "<group>"; };
 		4AD57BFE2BBD37E9009C9A4F /* TroveSettings.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = TroveSettings.h; sourceTree = "<group>"; };
 		4AD57BFF2BBD37E9009C9A4F /* TroveSettings.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = TroveSettings.m; sourceTree = "<group>"; };
+		4AD57C022BBD3E76009C9A4F /* EditBookViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = EditBookViewController.h; sourceTree = "<group>"; };
+		4AD57C032BBD3E76009C9A4F /* EditBookViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = EditBookViewController.m; sourceTree = "<group>"; };
 		DDEF260D28898925C4DBC851 /* Pods_Trove.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Trove.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		DFB9B7F7E7B2E3BD573B0345 /* Pods-Trove.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Trove.release.xcconfig"; path = "Target Support Files/Pods-Trove/Pods-Trove.release.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -98,6 +101,7 @@
 				4A6D504B2BAA7FE3008F7298 /* ViewController.m */,
 				4A37951C2BAA9ED800E400DB /* TroveBookCell.h */,
 				4A37951D2BAA9ED800E400DB /* TroveBookCell.m */,
+				4AD57C012BBD3E5B009C9A4F /* EditBook */,
 				4AD57BF72BBD16C5009C9A4F /* AddBook */,
 			);
 			path = TroveBooks;
@@ -169,6 +173,15 @@
 				4AD57BFC2BBD17A1009C9A4F /* ColorCollectionViewCell.m */,
 			);
 			path = AddBook;
+			sourceTree = "<group>";
+		};
+		4AD57C012BBD3E5B009C9A4F /* EditBook */ = {
+			isa = PBXGroup;
+			children = (
+				4AD57C022BBD3E76009C9A4F /* EditBookViewController.h */,
+				4AD57C032BBD3E76009C9A4F /* EditBookViewController.m */,
+			);
+			path = EditBook;
 			sourceTree = "<group>";
 		};
 		A40B9D3B0D07CB5D8014CDB2 /* Frameworks */ = {
@@ -304,6 +317,7 @@
 				4A6D50492BAA7FE3008F7298 /* SceneDelegate.m in Sources */,
 				4AD57BFD2BBD17A1009C9A4F /* ColorCollectionViewCell.m in Sources */,
 				4A8614C02BAABA3C00BDF693 /* TroveBookModel.m in Sources */,
+				4AD57C042BBD3E76009C9A4F /* EditBookViewController.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

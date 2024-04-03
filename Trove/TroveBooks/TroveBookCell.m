@@ -73,6 +73,7 @@ static CGFloat const kPercentageWidth = 40;
     [self addSubview:self.progressBar];
 //    CGFloat percentage = book.records.count ? [book.records[book.records.count - 1].page doubleValue] / [book.totalPages doubleValue] : 0;
     CGFloat percentage = 0.8875498745; //gizmo
+    if (percentage > 1) percentage = 1; // protect
     _progressBar.backgroundColor = [UIColor trovePulseColorType:book.color];
     [self.progressBar mas_makeConstraints:^(MASConstraintMaker *make) {
         make.left.offset(kLeftRight);
@@ -116,7 +117,7 @@ static CGFloat const kPercentageWidth = 40;
 {
     if (!_progressBarHolder) {
         _progressBarHolder = [UIView new];
-        _progressBarHolder.backgroundColor = [UIColor troveColorNamed:TroveColorTypeAddTaskCellBG];
+        _progressBarHolder.backgroundColor = [UIColor troveColorNamed:TroveColorTypeProgressHolder];
         _progressBarHolder.layer.cornerRadius = 10;
         _progressBarHolder.layer.borderWidth = 1;
         _progressBarHolder.layer.borderColor = [UIColor troveColorNamed:TroveColorTypeShadow].CGColor;

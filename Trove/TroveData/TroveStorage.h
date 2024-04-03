@@ -14,6 +14,7 @@ NS_ASSUME_NONNULL_BEGIN
 @interface TroveStorage : NSObject
 
 + (void)createBook:(TroveBookModel *)newbook;
++ (void)editBook:(NSString *)originalname toBook:(TroveBookModel *)newbook;
 + (BOOL)bookNameExists:(NSString *)newBookName;
 + (void)saveTroveBooks:(NSMutableArray<TroveBookModel *> *)books; // 归档
 + (NSMutableArray<TroveBookModel *> *)retriveTroveBooks; // 解档

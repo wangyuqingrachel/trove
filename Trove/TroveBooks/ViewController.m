@@ -12,6 +12,8 @@
 #import "TroveStorage.h"
 #import "UIColor+TroveColor.h"
 #import "AddBookViewController.h"
+#import "EditBookViewController.h"
+
 @interface ViewController () <UICollectionViewDelegate, UICollectionViewDataSource, UICollectionViewDelegateFlowLayout, UIViewControllerTransitioningDelegate>
 
 @property (nonatomic, strong) NSMutableArray<TroveBookModel *> *dataSource;
@@ -28,6 +30,7 @@
     if (self) {
         [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(restartVC) name:TroveSwitchThemeNotification object:nil];
         [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(reloadData) name:TroveBookCreateNotification object:nil];
+        [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(reloadData) name:TroveBookEditNotification object:nil];
     }
     return self;
 }
@@ -67,7 +70,7 @@
     self.view.backgroundColor = [UIColor troveColorNamed:TroveColorTypeBackground];
     // navi button
     UIImage *iconImage = [[UIImage systemImageNamed:@"plus"]  imageWithRenderingMode:UIImageRenderingModeAlwaysTemplate];
-    UIBarButtonItem *historyButton = [[UIBarButtonItem alloc] initWithImage:iconImage style:UIBarButtonItemStylePlain target:self action:@selector(goToHistory)];
+    UIBarButtonItem *historyButton = [[UIBarButtonItem alloc] initWithImage:iconImage style:UIBarButtonItemStylePlain target:self action:@selector(addNewBook)];
     self.navigationItem.rightBarButtonItem = historyButton;
     self.navigationController.navigationBar.tintColor = [UIColor troveColorNamed:TroveColorTypeText];
     // collection view
@@ -80,37 +83,18 @@
 
 #pragma mark - Action
 
-- (void)goToHistory
+- (void)addNewBook
 {
     AddBookViewController *addVC = [AddBookViewController new];
     [self.navigationController presentViewController:addVC animated:YES completion:nil];
 }
 
-- (void)fieldsChange
+- (void)longPress:(UILongPressGestureRecognizer *)longPress
 {
-    UIAlertController *alertController = (UIAlertController *)self.presentedViewController;
-    // Title
-    BOOL titleValid = NO;
-    NSString *title = alertController.textFields[0].text;
-    if (title.length) {
-        titleValid = YES;
-    }
-    // Pages
-    BOOL pagesValid = NO;
-    NSNumberFormatter *formatter = [[NSNumberFormatter alloc] init];
-    formatter.numberStyle = NSNumberFormatterDecimalStyle;
-    NSNumber *pages = [formatter numberFromString:alertController.textFields[1].text];
-    if (pages) {
-        pagesValid = YES;
-    }
-    // Check
-    if (titleValid && pagesValid) {
-        alertController.actions[1].enabled = YES;
-    } else {
-        alertController.actions[1].enabled = NO;
-    }
+    NSIndexPath *selectedIndexPath = [self.collectionView indexPathForItemAtPoint:[longPress locationInView:self.collectionView]];
+    EditBookViewController *editVC = [[EditBookViewController alloc] initWithBook:self.dataSource[selectedIndexPath.item]];
+    [self.navigationController presentViewController:editVC animated:YES completion:nil];
 }
-
 
 #pragma mark - UICollectionViewDelegate
 
@@ -185,6 +169,8 @@
         [_collectionView registerClass:[TroveBookCell class] forCellWithReuseIdentifier:[TroveBookCell identifier]];
         [_collectionView registerClass:[UICollectionViewCell class] forSupplementaryViewOfKind:UICollectionElementKindSectionHeader withReuseIdentifier:@"header"];
         [_collectionView registerClass:[UICollectionViewCell class] forSupplementaryViewOfKind:UICollectionElementKindSectionFooter withReuseIdentifier:@"footer"];
+        UILongPressGestureRecognizer *longPress = [[UILongPressGestureRecognizer alloc] initWithTarget:self action:@selector(longPress:)];
+        [_collectionView addGestureRecognizer:longPress];
     }
     return _collectionView;
 }

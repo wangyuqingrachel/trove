@@ -18,6 +18,7 @@ NS_ASSUME_NONNULL_BEGIN
 
 // Data
 #define TroveBookCreateNotification @"TroveBookCreateNotification"
+#define TroveBookEditNotification @"TroveBookEditNotification"
 
 // 系统声音 1050 - 1200 都还可以
 #define kAudioArchive (1104)

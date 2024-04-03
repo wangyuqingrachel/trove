@@ -21,6 +21,27 @@
     AudioServicesPlaySystemSound((SystemSoundID)kAudioClick);
 }
 
++ (void)editBook:(NSString *)originalname toBook:(TroveBookModel *)newbook
+{
+    NSMutableArray <TroveBookModel *> *books = [TroveStorage retriveTroveBooks];
+    NSInteger targetIndex = NSNotFound;
+    for (int i=0; i<books.count; i++) {
+        if ([books[i].bookTitle isEqualToString:originalname]) {
+            targetIndex = i;
+            break;
+        }
+    }
+    if (targetIndex != NSNotFound) {
+        books[targetIndex].bookTitle = newbook.bookTitle;
+        books[targetIndex].totalPages = newbook.totalPages;
+        books[targetIndex].color = newbook.color;
+        NSLog(@"Edit");
+        [TroveStorage saveTroveBooks:books];
+        [[NSNotificationCenter defaultCenter] postNotificationName:TroveBookEditNotification object:nil userInfo:nil];
+        AudioServicesPlaySystemSound((SystemSoundID)kAudioClick);
+    }
+}
+
 + (BOOL)bookNameExists:(NSString *)newBookName
 {
     NSMutableArray <TroveBookModel *> *tasks = [TroveStorage retriveTroveBooks];

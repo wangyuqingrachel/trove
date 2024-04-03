@@ -41,8 +41,8 @@ typedef NS_ENUM(NSInteger, TroveColorType) {
     TroveColorTypeText,                     // 文字颜色
     TroveColorTypeTextHint,                 // 文字备注颜色
     TroveColorTypeShadow,                   // 阴影颜色
-    TroveColorTypeAddTaskCellBG,            // add task cell的背景颜色
-    TroveColorTypeAddTaskCellPlus,          // add task cell的加号颜色
+    TroveColorTypeProgressHolder,            // add task cell的背景颜色
+    TroveColorTypeProgressHoderPulse,          // add task cell的加号颜色
 };
 
 @interface UIColor (TroveColor)
