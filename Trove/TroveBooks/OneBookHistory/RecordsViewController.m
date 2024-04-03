@@ -10,6 +10,7 @@
 #import "TroveRecordCell.h"
 #import "AddTroveRecordCell.h"
 #import <Masonry/Masonry.h>
+#import "AddRecordViewController.h"
 
 @interface RecordsViewController ()<UICollectionViewDelegate, UICollectionViewDataSource, UICollectionViewDelegateFlowLayout>
 
@@ -77,7 +78,10 @@
 
 - (void)collectionView:(UICollectionView *)collectionView didSelectItemAtIndexPath:(NSIndexPath *)selectedIndexPath
 {
-
+    if (selectedIndexPath.item == 0) {
+        AddRecordViewController *vc = [[AddRecordViewController alloc] initWithBook:self.book];
+        [self.navigationController pushViewController:vc animated:YES];
+    }
 }
 
 - (__kindof UICollectionViewCell *)collectionView:(UICollectionView *)collectionView cellForItemAtIndexPath:(NSIndexPath *)indexPath
