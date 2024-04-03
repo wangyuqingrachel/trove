@@ -7,6 +7,7 @@
 
 #import "SceneDelegate.h"
 #import "ViewController.h"
+#import "TroveSettings.h"
 
 @interface SceneDelegate ()
 
@@ -33,8 +34,13 @@
 
 
 - (void)sceneDidBecomeActive:(UIScene *)scene {
-    // Called when the scene has moved from an inactive state to an active state.
-    // Use this method to restart any tasks that were paused (or not yet started) when the scene was inactive.
+    BOOL appIsDark = [TroveSettings appliedDarkMode];
+    BOOL systemIsDark = [UIScreen mainScreen].traitCollection.userInterfaceStyle == UIUserInterfaceStyleDark;
+    if (appIsDark == systemIsDark) {
+        return;
+    } else {
+        [TroveSettings switchTheme];
+    }
 }
 
 

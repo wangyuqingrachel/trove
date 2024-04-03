@@ -26,9 +26,16 @@
 {
     self = [super init];
     if (self) {
+        [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(restartVC) name:TroveSwitchThemeNotification object:nil];
         [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(reloadData) name:TroveBookCreateNotification object:nil];
     }
     return self;
+}
+
+- (void)restartVC
+{
+    self.collectionView = nil;
+    [self p_setupUI];
 }
 
 - (void)reloadData

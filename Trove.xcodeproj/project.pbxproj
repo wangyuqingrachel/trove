@@ -20,6 +20,7 @@
 		4A8614C62BAABB9700BDF693 /* TroveStorage.m in Sources */ = {isa = PBXBuildFile; fileRef = 4A8614C52BAABB9700BDF693 /* TroveStorage.m */; };
 		4AD57BFA2BBD16F6009C9A4F /* AddBookViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 4AD57BF92BBD16F6009C9A4F /* AddBookViewController.m */; };
 		4AD57BFD2BBD17A1009C9A4F /* ColorCollectionViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 4AD57BFC2BBD17A1009C9A4F /* ColorCollectionViewCell.m */; };
+		4AD57C002BBD37E9009C9A4F /* TroveSettings.m in Sources */ = {isa = PBXBuildFile; fileRef = 4AD57BFF2BBD37E9009C9A4F /* TroveSettings.m */; };
 		9C1C2654F8A141CFDB69A5E5 /* Pods_Trove.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = DDEF260D28898925C4DBC851 /* Pods_Trove.framework */; };
 /* End PBXBuildFile section */
 
@@ -51,6 +52,8 @@
 		4AD57BF92BBD16F6009C9A4F /* AddBookViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AddBookViewController.m; sourceTree = "<group>"; };
 		4AD57BFB2BBD17A1009C9A4F /* ColorCollectionViewCell.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ColorCollectionViewCell.h; sourceTree = "<group>"; };
 		4AD57BFC2BBD17A1009C9A4F /* ColorCollectionViewCell.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ColorCollectionViewCell.m; sourceTree = "<group>"; };
+		4AD57BFE2BBD37E9009C9A4F /* TroveSettings.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = TroveSettings.h; sourceTree = "<group>"; };
+		4AD57BFF2BBD37E9009C9A4F /* TroveSettings.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = TroveSettings.m; sourceTree = "<group>"; };
 		DDEF260D28898925C4DBC851 /* Pods_Trove.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Trove.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		DFB9B7F7E7B2E3BD573B0345 /* Pods-Trove.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Trove.release.xcconfig"; path = "Target Support Files/Pods-Trove/Pods-Trove.release.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -107,6 +110,8 @@
 				4A3795262BAAA94F00E400DB /* TroveMacro.m */,
 				4A2B85742BB0270C0039AD22 /* UIColor+TroveColor.h */,
 				4A2B85752BB0270C0039AD22 /* UIColor+TroveColor.m */,
+				4AD57BFE2BBD37E9009C9A4F /* TroveSettings.h */,
+				4AD57BFF2BBD37E9009C9A4F /* TroveSettings.m */,
 			);
 			path = TroveCustomize;
 			sourceTree = "<group>";
@@ -292,6 +297,7 @@
 				4A8614C32BAABA9E00BDF693 /* TroveRecordModel.m in Sources */,
 				4A6D504C2BAA7FE3008F7298 /* ViewController.m in Sources */,
 				4AD57BFA2BBD16F6009C9A4F /* AddBookViewController.m in Sources */,
+				4AD57C002BBD37E9009C9A4F /* TroveSettings.m in Sources */,
 				4A8614C62BAABB9700BDF693 /* TroveStorage.m in Sources */,
 				4A6D50462BAA7FE3008F7298 /* AppDelegate.m in Sources */,
 				4A6D50572BAA7FE7008F7298 /* main.m in Sources */,
