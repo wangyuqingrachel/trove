@@ -57,7 +57,7 @@ static CGFloat const kPlusWidth = 20;
     // text
     self.label.textColor = color;
     [self addSubview:self.label];
-    self.label.text = record.note;
+    self.label.text = [record.page stringValue];
     [self.label mas_makeConstraints:^(MASConstraintMaker *make) {
         make.left.offset(kTextLeftMagin);
         make.centerY.mas_equalTo(self.line);

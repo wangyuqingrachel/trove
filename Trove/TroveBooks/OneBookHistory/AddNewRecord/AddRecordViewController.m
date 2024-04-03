@@ -87,15 +87,12 @@ static CGFloat const kPadding = 20;
     [self.noteField endEditing:YES];
 }
 
-- (void)dateChange
-{
-    self.brandNewRecord.date = self.datePicker.date; //实时更新date
-}
-
 - (void)saveRecord
 {
-    self.brandNewRecord.note = self.noteField.text; // 最后更新note
+    self.brandNewRecord.date = self.datePicker.date; //更新date
+    self.brandNewRecord.note = self.noteField.text; //更新note
     [TroveStorage addRecord:self.brandNewRecord toBook:self.book.bookTitle];
+    [self.navigationController popViewControllerAnimated:YES];
 }
 
 #pragma mark - UIPickerViewDataSource
@@ -142,7 +139,10 @@ static CGFloat const kPadding = 20;
     if (!_datePicker) {
         _datePicker = [UIDatePicker new];
         _datePicker.datePickerMode = UIDatePickerModeDateAndTime;
-        [_datePicker addTarget:self action:@selector(dateChange) forControlEvents:UIControlEventValueChanged];
+        _datePicker.tintColor = [UIColor troveColorNamed:self.book.color];
+        if (self.book.records.count > 0) {
+            _datePicker.minimumDate = self.book.records[0].date;
+        }
     }
     return _datePicker;
 }

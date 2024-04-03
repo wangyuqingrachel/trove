@@ -12,9 +12,9 @@
 static CGFloat const kLeftMagin = 50;
 static CGFloat const kTextLeftMagin = 80;
 static CGFloat const kLineWidth = 1;
-static CGFloat const kIconWidth = 30;
-static CGFloat const kPlusWidth = 20;
-
+static CGFloat const kIconWidth = 40;
+static CGFloat const kPlusWidth = 30;
+ 
 @interface AddTroveRecordCell ()
 
 @property (nonatomic, strong) UIView *line;
