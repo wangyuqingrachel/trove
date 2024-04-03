@@ -7,16 +7,19 @@
 
 #import "AddTroveRecordCell.h"
 #import <Masonry/Masonry.h>
+#import "UIColor+TroveColor.h"
 
 static CGFloat const kLeftMagin = 50;
 static CGFloat const kTextLeftMagin = 80;
 static CGFloat const kLineWidth = 1;
-static CGFloat const kDotWidth = 7;
+static CGFloat const kIconWidth = 30;
+static CGFloat const kPlusWidth = 20;
 
 @interface AddTroveRecordCell ()
 
 @property (nonatomic, strong) UIView *line;
-@property (nonatomic, strong) UIView *dot;
+@property (nonatomic, strong) UIView *icon;
+@property (nonatomic, strong) UIImageView *plus;
 @property (nonatomic, strong) UILabel *label;
 
 
@@ -39,14 +42,20 @@ static CGFloat const kDotWidth = 7;
         make.width.mas_equalTo(kLineWidth);
         make.top.bottom.offset(0);
     }];
-    // dot
-    self.dot.backgroundColor = color;
-    [self addSubview:self.dot];
-    [self.dot mas_makeConstraints:^(MASConstraintMaker *make) {
+    // icon
+    self.icon.backgroundColor = color;
+    [self addSubview:self.icon];
+    [self.icon mas_makeConstraints:^(MASConstraintMaker *make) {
         make.centerX.centerY.mas_equalTo(self.line);
-        make.width.height.mas_equalTo(kDotWidth);
+        make.width.height.mas_equalTo(kIconWidth);
     }];
-    // line
+    self.icon.layer.cornerRadius = kIconWidth/2;
+    [self.icon addSubview:self.plus];
+    [self.plus mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.centerX.centerY.offset(0);
+        make.width.height.mas_equalTo(kPlusWidth);
+    }];
+    // text
     self.label.textColor = color;
     [self addSubview:self.label];
     self.label.text = @"add new record";
@@ -64,18 +73,26 @@ static CGFloat const kDotWidth = 7;
 {
     if (!_line) {
         _line = [UIView new];
-        _line.alpha = 0.5;
     }
     return _line;
 }
 
-- (UIView *)dot
+- (UIView *)icon
 {
-    if (!_dot) {
-        _dot = [UIView new];
-        _dot.layer.cornerRadius = kDotWidth/2;
+    if (!_icon) {
+        _icon = [UIView new];
     }
-    return _dot;
+    return _icon;
+}
+
+- (UIImageView *)plus
+{
+    if (!_plus) {
+        UIImage *image = [[UIImage systemImageNamed:@"plus"]  imageWithRenderingMode:UIImageRenderingModeAlwaysTemplate];
+        _plus = [[UIImageView alloc] initWithImage:image];
+        _plus.tintColor = [UIColor troveColorNamed:TroveColorTypeBackground];
+    }
+    return _plus;
 }
 
 - (UILabel *)label
