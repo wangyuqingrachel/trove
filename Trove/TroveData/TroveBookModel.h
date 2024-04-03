@@ -7,6 +7,7 @@
 
 #import <Foundation/Foundation.h>
 #import "TroveRecordModel.h"
+#import "UIColor+TroveColor.h"
 
 NS_ASSUME_NONNULL_BEGIN
 
@@ -14,9 +15,10 @@ NS_ASSUME_NONNULL_BEGIN
 
 @property (nonatomic, strong) NSString *bookTitle;
 @property (nonatomic, strong) NSNumber *totalPages;
+@property (nonatomic, assign) TroveColorType color;
 @property (nonatomic, strong) NSMutableArray<TroveRecordModel *> *records;
 
-- (instancetype)initWithTitle:(NSString *)title pages:(NSNumber *)pages;
+- (instancetype)initWithTitle:(NSString *)title pages:(NSNumber *)pages colorType:(TroveColorType)colorType;
 
 @end
 

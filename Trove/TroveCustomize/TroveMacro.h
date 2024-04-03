@@ -23,6 +23,9 @@ NS_ASSUME_NONNULL_BEGIN
 #define kAudioArchive (1104)
 #define kAudioClick (1123)
 
+// Max number of colors
+#define kMaxColorNum (8)
+
 @interface TroveMacro : NSObject
 
 @end

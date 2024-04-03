@@ -9,12 +9,13 @@
 
 @implementation TroveBookModel
 
-- (instancetype)initWithTitle:(NSString *)title pages:(NSNumber *)pages
+- (instancetype)initWithTitle:(NSString *)title pages:(NSNumber *)pages colorType:(TroveColorType)colorType
 {
     self = [super init];
     if (self) {
         _bookTitle = title;
         _totalPages = pages;
+        _color = colorType;
         _records = [NSMutableArray new];
     }
     return self;
@@ -29,6 +30,7 @@
     //Encode properties, other class variables, etc
     [encoder encodeObject:self.bookTitle forKey:@"book_title"];
     [encoder encodeObject:self.totalPages forKey:@"total_pages"];
+    [encoder encodeInt:[@(self.color) intValue] forKey:@"color"];
     [encoder encodeObject:self.records forKey:@"records"];
 }
 
@@ -37,6 +39,7 @@
         //decode properties, other class vars
         self.bookTitle = [decoder decodeObjectForKey:@"book_title"];
         self.totalPages = [decoder decodeObjectForKey:@"total_pages"];
+        self.color = [decoder decodeIntForKey:@"color"];
         self.records = [decoder decodeObjectForKey:@"records"];
     }
     return self;

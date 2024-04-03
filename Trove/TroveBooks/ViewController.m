@@ -13,7 +13,7 @@
 #import "HistoryViewController.h"
 #import "TroveStorage.h"
 #import "UIColor+TroveColor.h"
-
+#import "AddBookViewController.h"
 @interface ViewController () <UICollectionViewDelegate, UICollectionViewDataSource, UICollectionViewDelegateFlowLayout, UIViewControllerTransitioningDelegate>
 
 @property (nonatomic, strong) NSMutableArray<TroveBookModel *> *dataSource;
@@ -65,47 +65,6 @@
     [self.navigationController pushViewController:[HistoryViewController new] animated:YES];
 }
 
-- (void)tapAddNewBook
-{
-    UIAlertController *alertController = [UIAlertController alertControllerWithTitle:@"Input the Book Title and its Total Pages"
-                                                                             message:nil
-                                                                      preferredStyle:UIAlertControllerStyleAlert];
-
-    [alertController addTextFieldWithConfigurationHandler:^(UITextField *textField) {
-        textField.placeholder = @"Book Title";
-        textField.textColor = [UIColor troveColorNamed:TroveColorTypeText];
-        textField.clearButtonMode = UITextFieldViewModeWhileEditing;
-        textField.borderStyle = UITextBorderStyleRoundedRect;
-        textField.keyboardType = UIKeyboardTypeDefault;
-        [textField addTarget:self action:@selector(fieldsChange) forControlEvents:UIControlEventEditingChanged];
-    }];
-    [alertController addTextFieldWithConfigurationHandler:^(UITextField *textField) {
-        textField.placeholder = @"Total Pages";
-        textField.textColor = [UIColor troveColorNamed:TroveColorTypeText];
-        textField.clearButtonMode = UITextFieldViewModeWhileEditing;
-        textField.borderStyle = UITextBorderStyleRoundedRect;
-        textField.keyboardType = UIKeyboardTypeDecimalPad;
-        [textField addTarget:self action:@selector(fieldsChange) forControlEvents:UIControlEventEditingChanged];
-    }];
-    
-    [alertController addAction:[UIAlertAction actionWithTitle:@"Cancel" style:UIAlertActionStyleCancel handler:^(UIAlertAction *action) {
-
-    }]];
-    [alertController addAction:[UIAlertAction actionWithTitle:@"Create" style:UIAlertActionStyleDefault handler:^(UIAlertAction *action) {
-        NSString *title = alertController.textFields[0].text;
-        NSNumberFormatter *formatter = [[NSNumberFormatter alloc] init];
-        formatter.numberStyle = NSNumberFormatterDecimalStyle;
-        NSNumber *pages = [formatter numberFromString:alertController.textFields[1].text];
-        NSInteger pagesRound = [pages integerValue]; // 防止输入小数
-        TroveBookModel *newBook = [[TroveBookModel alloc] initWithTitle:title pages:@(pagesRound)];
-        [TroveStorage createBook:newBook];
-    }]];
-    alertController.actions[1].enabled = NO;
-    [self presentViewController:alertController animated:YES completion:nil];
-}
-
-
-
 - (void)fieldsChange
 {
     UIAlertController *alertController = (UIAlertController *)self.presentedViewController;
@@ -137,7 +96,8 @@
 - (void)collectionView:(UICollectionView *)collectionView didSelectItemAtIndexPath:(NSIndexPath *)selectedIndexPath
 {
     if (selectedIndexPath.item == [self.collectionView numberOfItemsInSection:0] - 1) { //最后一个cell
-        [self tapAddNewBook];
+        AddBookViewController *addVC = [AddBookViewController new];
+        [self.navigationController presentViewController:addVC animated:YES completion:nil];
     } else {
 
     }
