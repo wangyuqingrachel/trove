@@ -67,44 +67,44 @@
     }
 }
 
-+ (TroveColorType)trove_getPulseColorType:(TroveColorType)color
++ (UIColor *)trovePulseColorType:(TroveColorType)colorType
 {
-    switch (color) {
+    switch (colorType) {
         case TroveColorTypeCellPink:
-            return TroveColorTypeCellPinkPulse;
+            return [UIColor troveColorNamed:TroveColorTypeCellPinkPulse];
         case TroveColorTypeCellOrange:
-            return TroveColorTypeCellOrangePulse;
+            return [UIColor troveColorNamed:TroveColorTypeCellOrangePulse];
         case TroveColorTypeCellYellow:
-            return TroveColorTypeCellYellowPulse;
+            return [UIColor troveColorNamed:TroveColorTypeCellYellowPulse];
         case TroveColorTypeCellGreen:
-            return TroveColorTypeCellGreenPulse;
+            return [UIColor troveColorNamed:TroveColorTypeCellGreenPulse];
         case TroveColorTypeCellTeal:
-            return TroveColorTypeCellTealPulse;
+            return [UIColor troveColorNamed:TroveColorTypeCellTealPulse];
         case TroveColorTypeCellBlue:
-            return TroveColorTypeCellBluePulse;
+            return [UIColor troveColorNamed:TroveColorTypeCellBluePulse];
         case TroveColorTypeCellPurple:
-            return TroveColorTypeCellPurplePulse;
+            return [UIColor troveColorNamed:TroveColorTypeCellPurplePulse];
         case TroveColorTypeCellGray:
-            return TroveColorTypeCellGrayPulse;
+            return [UIColor troveColorNamed:TroveColorTypeCellGrayPulse];
             
         case TroveColorTypeCellPinkPulse:
-            return TroveColorTypeCellPink;
+            return [UIColor troveColorNamed:TroveColorTypeCellPink];;
         case TroveColorTypeCellOrangePulse:
-            return TroveColorTypeCellOrange;
+            return [UIColor troveColorNamed:TroveColorTypeCellOrange];
         case TroveColorTypeCellYellowPulse:
-            return TroveColorTypeCellYellow;
+            return [UIColor troveColorNamed:TroveColorTypeCellYellow];
         case TroveColorTypeCellGreenPulse:
-            return TroveColorTypeCellGreen;
+            return [UIColor troveColorNamed:TroveColorTypeCellGreen];
         case TroveColorTypeCellTealPulse:
-            return TroveColorTypeCellTeal;
+            return [UIColor troveColorNamed:TroveColorTypeCellTeal];
         case TroveColorTypeCellBluePulse:
-            return TroveColorTypeCellBlue;
+            return [UIColor troveColorNamed:TroveColorTypeCellBlue];
         case TroveColorTypeCellPurplePulse:
-            return TroveColorTypeCellPurple;
+            return [UIColor troveColorNamed:TroveColorTypeCellPurple];
         case TroveColorTypeCellGrayPulse:
-            return TroveColorTypeCellGray;
+            return [UIColor troveColorNamed:TroveColorTypeCellGray];
         default:
-            return TroveColorTypeBackground;
+            return [UIColor troveColorNamed:TroveColorTypeBackground];
     }
 }
 

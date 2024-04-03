@@ -48,7 +48,7 @@ typedef NS_ENUM(NSInteger, TroveColorType) {
 @interface UIColor (TroveColor)
 
 + (UIColor *)troveColorNamed:(TroveColorType)colorType;
-+ (TroveColorType)trove_getPulseColorType:(TroveColorType)color;
++ (UIColor *)trovePulseColorType:(TroveColorType)colorType;
 
 @end
 

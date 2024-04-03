@@ -100,11 +100,11 @@
 		4A37951A2BAA9C2300E400DB /* TroveBooks */ = {
 			isa = PBXGroup;
 			children = (
-				4AD57BF72BBD16C5009C9A4F /* AddBook */,
 				4A6D504A2BAA7FE3008F7298 /* ViewController.h */,
 				4A6D504B2BAA7FE3008F7298 /* ViewController.m */,
 				4A37951C2BAA9ED800E400DB /* TroveBookCell.h */,
 				4A37951D2BAA9ED800E400DB /* TroveBookCell.m */,
+				4AD57BF72BBD16C5009C9A4F /* AddBook */,
 			);
 			path = TroveBooks;
 			sourceTree = "<group>";

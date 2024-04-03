@@ -21,15 +21,15 @@
     AudioServicesPlaySystemSound((SystemSoundID)kAudioClick);
 }
 
-+ (BookNameExistsType)bookNameExists:(NSString *)newBookName
++ (BOOL)bookNameExists:(NSString *)newBookName
 {
     NSMutableArray <TroveBookModel *> *tasks = [TroveStorage retriveTroveBooks];
     for (int i=0; i<tasks.count; i++) {
         if ([tasks[i].bookTitle isEqualToString:newBookName]) {
-            return BookNameExistsTypeExists;
+            return YES;
         }
     }
-    return BookNameExistsTypeValid;
+    return NO;
 }
 
 + (void)saveTroveBooks:(NSMutableArray<TroveBookModel *> *)books // 归档

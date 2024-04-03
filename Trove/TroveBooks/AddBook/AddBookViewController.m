@@ -18,8 +18,8 @@ static CGFloat const kHeightRatio = 0.8;
 @interface AddBookViewController ()<UICollectionViewDelegate, UICollectionViewDataSource, UICollectionViewDelegateFlowLayout, UIGestureRecognizerDelegate>
 
 @property (nonatomic, strong) TroveBookModel *brandNewBookModel; //新创建的task，由于OC不允许使用new作为property的前缀，这里使用了brand new
-@property (nonatomic, strong) UITextField *editTaskNameTextField;
-@property (nonatomic, strong) UILabel *addTaskNameHint;
+@property (nonatomic, strong) UITextField *enterBookNameTextField;
+@property (nonatomic, strong) UITextField *enterBookPageTextField;
 @property (nonatomic, strong) UICollectionView *collectionView;
 @property (nonatomic, strong) NSArray<TroveColorModel *> *colorBlocks;
 @property (nonatomic, strong) UIButton *discardButton;
@@ -33,7 +33,7 @@ static CGFloat const kHeightRatio = 0.8;
 - (void)viewDidLoad {
     [super viewDidLoad];
     [self p_setupUI];
-    [self.editTaskNameTextField becomeFirstResponder];
+    [self.enterBookNameTextField becomeFirstResponder];
 }
 
 - (void)viewDidLayoutSubviews
@@ -50,26 +50,44 @@ static CGFloat const kHeightRatio = 0.8;
 
 - (void)clickCreateBtn
 {
-    NSString *currentText = self.editTaskNameTextField.text;
-    BOOL textIsEmpty = !currentText || [currentText isEqualToString:@""];
-    BookNameExistsType existType = [TroveStorage bookNameExists:currentText];
-    if (textIsEmpty) {
-        UIAlertController* newNameIsEmptyAlert = [UIAlertController alertControllerWithTitle:@"name_field_cannot_be_empty" message:nil preferredStyle:UIAlertControllerStyleAlert];
-
+    // BOOK NAME
+    NSString *booktitle = self.enterBookNameTextField.text;
+    BOOL booknameEmpty = !booktitle || [booktitle isEqualToString:@""];
+    BOOL booknameInvalid = [TroveStorage bookNameExists:booktitle];
+    // BOOK PAGES
+    NSString *bookpages = self.enterBookPageTextField.text;
+    BOOL bookpagesEmpty = !bookpages || [bookpages isEqualToString:@""];
+    NSNumberFormatter *formatter = [[NSNumberFormatter alloc] init];
+    formatter.numberStyle = NSNumberFormatterDecimalStyle;
+    NSNumber *pages = [formatter numberFromString:bookpages];
+    BOOL bookpageInvalid = !pages;
+    if (!booknameEmpty && !booknameInvalid && !bookpagesEmpty && !bookpageInvalid) {
+        [self dismissViewControllerAnimated:YES completion:^{
+            self.brandNewBookModel.bookTitle = booktitle; //taskname退出时更新
+            [TroveStorage createBook:self.brandNewBookModel];
+        }];
+    } else if (booknameEmpty) {
+        UIAlertController* newNameIsEmptyAlert = [UIAlertController alertControllerWithTitle:@"bookname_cannot_be_empty" message:nil preferredStyle:UIAlertControllerStyleAlert];
         UIAlertAction* understandAction = [UIAlertAction actionWithTitle:@"gotcha" style:UIAlertActionStyleDefault handler:nil];
         [newNameIsEmptyAlert addAction:understandAction];
         [self presentViewController:newNameIsEmptyAlert animated:YES completion:nil];
-    } else if (existType != BookNameExistsTypeExists) {
-        UIAlertController* newNameIsDuplicateAlert = [UIAlertController alertControllerWithTitle:@"task_cannot_be_duplicated" message: @"this_task_exists_in_current_task_list" preferredStyle:UIAlertControllerStyleAlert];
+    } else if (booknameInvalid){
+        UIAlertController* newNameIsDuplicateAlert = [UIAlertController alertControllerWithTitle:@"bookname_cannot_be_duplicated" message: nil preferredStyle:UIAlertControllerStyleAlert];
         UIAlertAction* understandAction = [UIAlertAction actionWithTitle:@"gotcha" style:UIAlertActionStyleDefault handler:nil];
         [newNameIsDuplicateAlert addAction:understandAction];
         [self presentViewController:newNameIsDuplicateAlert animated:YES completion:nil];
-    } else {
-        [self dismissViewControllerAnimated:YES completion:^{
-            self.brandNewBookModel.bookTitle = currentText; //taskname退出时更新
-            [TroveStorage createBook:self.brandNewBookModel];
-        }];
+    } else if (bookpagesEmpty) {
+        UIAlertController* newNameIsDuplicateAlert = [UIAlertController alertControllerWithTitle:@"bookpage_cannot_be_empty" message: nil preferredStyle:UIAlertControllerStyleAlert];
+        UIAlertAction* understandAction = [UIAlertAction actionWithTitle:@"gotcha" style:UIAlertActionStyleDefault handler:nil];
+        [newNameIsDuplicateAlert addAction:understandAction];
+        [self presentViewController:newNameIsDuplicateAlert animated:YES completion:nil];
+    } else if (bookpageInvalid) {
+        UIAlertController* newNameIsDuplicateAlert = [UIAlertController alertControllerWithTitle:@"bookpage_invalid" message: nil preferredStyle:UIAlertControllerStyleAlert];
+        UIAlertAction* understandAction = [UIAlertAction actionWithTitle:@"gotcha" style:UIAlertActionStyleDefault handler:nil];
+        [newNameIsDuplicateAlert addAction:understandAction];
+        [self presentViewController:newNameIsDuplicateAlert animated:YES completion:nil];
     }
+
 
 }
 
@@ -81,22 +99,22 @@ static CGFloat const kHeightRatio = 0.8;
 - (void)p_setupUI
 {
     self.view.backgroundColor = [UIColor troveColorNamed:self.brandNewBookModel.color];
-    [self.view addSubview:self.editTaskNameTextField];
-    [self.editTaskNameTextField mas_makeConstraints:^(MASConstraintMaker *make) {
+    [self.view addSubview:self.enterBookNameTextField];
+    [self.enterBookNameTextField mas_makeConstraints:^(MASConstraintMaker *make) {
         make.top.offset(20);
         make.centerX.offset(0);
         make.width.mas_equalTo(kScreenWidth - 2*kAddTaskVCPadding);
     }];
-    [self.view addSubview:self.addTaskNameHint];
-    [self.addTaskNameHint mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.top.mas_equalTo(self.editTaskNameTextField.mas_bottom).offset(8);
+    [self.view addSubview:self.enterBookPageTextField];
+    [self.enterBookPageTextField mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.top.mas_equalTo(self.enterBookNameTextField.mas_bottom).offset(8);
         make.centerX.offset(0);
         make.width.mas_equalTo(kScreenWidth - 2*kAddTaskVCPadding);
     }];
     
     [self.view addSubview:self.collectionView];
     [self.collectionView mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.top.mas_equalTo(self.addTaskNameHint.mas_bottom).offset(16);
+        make.top.mas_equalTo(self.enterBookPageTextField.mas_bottom).offset(16);
         make.centerX.offset(0);
         make.width.mas_equalTo(kScreenWidth - 2*kAddTaskVCPadding);
         make.height.mas_equalTo([self p_colorBlockWidth]);
@@ -184,35 +202,36 @@ static CGFloat const kHeightRatio = 0.8;
     if (!_brandNewBookModel) {
         NSArray *allColorType = @[@(TroveColorTypeCellPink), @(TroveColorTypeCellOrange), @(TroveColorTypeCellYellow), @(TroveColorTypeCellGreen), @(TroveColorTypeCellTeal), @(TroveColorTypeCellBlue), @(TroveColorTypeCellPurple),@(TroveColorTypeCellGray)];
         TroveColorType type = [allColorType[arc4random() % allColorType.count] integerValue]; // 随机生成一个颜色
-        _brandNewBookModel = [[TroveBookModel alloc] initWithTitle:@"untitled" pages:@0 colorType:type];
+        _brandNewBookModel = [[TroveBookModel alloc] initWithTitle:@"Untitled" pages:@0 colorType:type];
     }
     return _brandNewBookModel;
 }
 
-- (UITextField *)editTaskNameTextField
+- (UITextField *)enterBookNameTextField
 {
-    if (!_editTaskNameTextField) {
-        _editTaskNameTextField = [UITextField new];
-        _editTaskNameTextField.placeholder = @"enter_task_title";
-        _editTaskNameTextField.textColor = [UIColor troveColorNamed:TroveColorTypeText];
-        _editTaskNameTextField.font = [UIFont fontWithName:@"TrebuchetMS-Italic" size:20];
-        _editTaskNameTextField.enabled = YES;
-        _editTaskNameTextField.textAlignment = NSTextAlignmentCenter;
+    if (!_enterBookNameTextField) {
+        _enterBookNameTextField = [UITextField new];
+        _enterBookNameTextField.placeholder = @"enter_book_title";
+        _enterBookNameTextField.textColor = [UIColor troveColorNamed:TroveColorTypeText];
+        _enterBookNameTextField.font = [UIFont fontWithName:@"TrebuchetMS-Italic" size:20];
+        _enterBookNameTextField.enabled = YES;
+        _enterBookNameTextField.textAlignment = NSTextAlignmentCenter;
     }
-    return _editTaskNameTextField;
+    return _enterBookNameTextField;
 }
 
-- (UILabel *)addTaskNameHint
+- (UITextField *)enterBookPageTextField
 {
-    if (!_addTaskNameHint) {
-        _addTaskNameHint = [UILabel new];
-        _addTaskNameHint.text = @"add_taskname_hint";
-        _addTaskNameHint.textColor = [UIColor troveColorNamed:TroveColorTypeTextHint];
-        _addTaskNameHint.font = [UIFont fontWithName:@"TrebuchetMS-Italic" size:12];
-        _addTaskNameHint.textAlignment = NSTextAlignmentCenter;
-        
+    if (!_enterBookPageTextField) {
+        _enterBookPageTextField = [UITextField new];
+        _enterBookPageTextField.placeholder = @"enter_book_page";
+        _enterBookPageTextField.textColor = [UIColor troveColorNamed:TroveColorTypeText];
+        _enterBookPageTextField.font = [UIFont fontWithName:@"TrebuchetMS-Italic" size:20];
+        _enterBookPageTextField.enabled = YES;
+        _enterBookPageTextField.textAlignment = NSTextAlignmentCenter;
+        _enterBookPageTextField.keyboardType = UIKeyboardTypeDecimalPad;
     }
-    return _addTaskNameHint;
+    return _enterBookPageTextField;
 }
 
 - (UICollectionView *)collectionView
