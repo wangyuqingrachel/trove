@@ -13,7 +13,7 @@ NS_ASSUME_NONNULL_BEGIN
 @interface TroveRecordCell : UICollectionViewCell
 
 + (NSString *)identifier;
-- (void)configWithColor:(UIColor *)color recordModel:(TroveRecordModel *)book;
+- (void)configWithColor:(UIColor *)color recordModel:(TroveRecordModel *)book isEnd:(BOOL)isEnd;
 
 @end
 

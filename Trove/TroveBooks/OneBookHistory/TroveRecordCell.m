@@ -31,7 +31,7 @@ static CGFloat const kPlusWidth = 20;
     return NSStringFromClass(self.class);
 }
 
-- (void)configWithColor:(UIColor *)color recordModel:(TroveRecordModel *)record
+- (void)configWithColor:(UIColor *)color recordModel:(TroveRecordModel *)record isEnd:(BOOL)isEnd
 {
     // line
     self.line.backgroundColor = color;
@@ -39,13 +39,15 @@ static CGFloat const kPlusWidth = 20;
     [self.line mas_makeConstraints:^(MASConstraintMaker *make) {
         make.left.offset(kLeftMagin);
         make.width.mas_equalTo(kLineWidth);
-        make.top.bottom.offset(0);
+        make.top.offset(0);
+        make.bottom.offset(isEnd ? -self.frame.size.height/2 : 0);
     }];
     // icon
     self.icon.backgroundColor = color;
     [self addSubview:self.icon];
     [self.icon mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.centerX.centerY.mas_equalTo(self.line);
+        make.centerX.mas_equalTo(self.line);
+        make.centerY.offset(0);
         make.width.height.mas_equalTo(kIconWidth);
     }];
     self.icon.layer.cornerRadius = kIconWidth/2;

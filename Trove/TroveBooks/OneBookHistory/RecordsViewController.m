@@ -93,12 +93,14 @@
     if (indexPath.item == 0) {
         AddTroveRecordCell *cell = [collectionView dequeueReusableCellWithReuseIdentifier:[AddTroveRecordCell identifier] forIndexPath:indexPath];
         UIColor *color = [TroveSettings appliedDarkMode] ? [UIColor troveColorNamed:[TroveStorage getBook:self.bookTitle].color] : [UIColor trovePulseColorType:[TroveStorage getBook:self.bookTitle].color];
-        [cell configWithColor:color];
+        BOOL isEnd = [collectionView numberOfItemsInSection:0] - 1 == indexPath.item;
+        [cell configWithColor:color isEnd:isEnd];
         return cell;
     } else {
         TroveRecordCell *cell = [collectionView dequeueReusableCellWithReuseIdentifier:[TroveRecordCell identifier] forIndexPath:indexPath];
         TroveRecordModel *model = self.dataSource[indexPath.item - 1];
-        [cell configWithColor:[UIColor troveColorNamed:[TroveStorage getBook:self.bookTitle].color] recordModel:model];
+        BOOL isEnd = [collectionView numberOfItemsInSection:0] - 1 == indexPath.item;
+        [cell configWithColor:[UIColor troveColorNamed:[TroveStorage getBook:self.bookTitle].color] recordModel:model isEnd:isEnd];
         return cell;
     }
 }

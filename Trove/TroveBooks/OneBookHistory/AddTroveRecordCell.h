@@ -12,7 +12,7 @@ NS_ASSUME_NONNULL_BEGIN
 @interface AddTroveRecordCell : UICollectionViewCell
 
 + (NSString *)identifier;
-- (void)configWithColor:(UIColor *)color;
+- (void)configWithColor:(UIColor *)color isEnd:(BOOL)isEnd;
 
 @end
 
