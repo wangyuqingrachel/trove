@@ -9,16 +9,19 @@
 #import "UIColor+TroveColor.h"
 #import "TroveMacro.h"
 #import <Masonry/Masonry.h>
+#import "TroveStorage.h"
 
 static CGFloat const kPadding = 20;
 
-@interface AddRecordViewController ()<UIPickerViewDataSource, UIPickerViewDelegate>
+@interface AddRecordViewController ()<UIPickerViewDataSource, UIPickerViewDelegate, UIGestureRecognizerDelegate>
 
 @property (nonatomic, strong) TroveBookModel *book;
+@property (nonatomic, assign) NSInteger lastReadTo;
 @property (nonatomic, strong) UIDatePicker *datePicker;
 @property (nonatomic, strong) UIPickerView *pagePicker;
 @property (nonatomic, strong) UITextView *noteField;
 @property (nonatomic, strong) UIButton *saveButton;
+@property (nonatomic, strong) TroveRecordModel *brandNewRecord;
 
 @end
 
@@ -29,7 +32,14 @@ static CGFloat const kPadding = 20;
     self = [super init];
     if (self) {
         self.book = book;
+        self.lastReadTo = 0;
+        if (self.book.records.count > 0) {
+            self.lastReadTo = [self.book.records[0].page integerValue];
+        }
         self.view.backgroundColor = [UIColor troveColorNamed:book.color];
+        UITapGestureRecognizer *tapRecognizer = [UITapGestureRecognizer new];
+        [tapRecognizer addTarget:self action:@selector(dismissKeyboard)];
+        [self.view addGestureRecognizer:tapRecognizer];
     }
     return self;
 }
@@ -45,7 +55,7 @@ static CGFloat const kPadding = 20;
     [self.datePicker mas_makeConstraints:^(MASConstraintMaker *make) {
         make.left.offset(kPadding);
         make.width.mas_equalTo((kScreenWidth-2*kPadding)/2);
-        make.top.offset(kScreenHeight/4);
+        make.top.offset(kScreenHeight/5);
     }];
     [self.view addSubview:self.pagePicker];
     [self.pagePicker mas_makeConstraints:^(MASConstraintMaker *make) {
@@ -70,6 +80,24 @@ static CGFloat const kPadding = 20;
     
 }
 
+#pragma mark - Actions
+
+- (void)dismissKeyboard
+{
+    [self.noteField endEditing:YES];
+}
+
+- (void)dateChange
+{
+    self.brandNewRecord.date = self.datePicker.date; //实时更新date
+}
+
+- (void)saveRecord
+{
+    self.brandNewRecord.note = self.noteField.text; // 最后更新note
+    [TroveStorage addRecord:self.brandNewRecord toBook:self.book.bookTitle];
+}
+
 #pragma mark - UIPickerViewDataSource
 
 - (NSInteger)numberOfComponentsInPickerView:(UIPickerView *)pickerView
@@ -78,7 +106,7 @@ static CGFloat const kPadding = 20;
 }
 - (NSInteger)pickerView:(UIPickerView *)pickerView numberOfRowsInComponent:(NSInteger)component
 {
-    return [self.book.totalPages integerValue];
+    return [self.book.totalPages integerValue] - self.lastReadTo;
 }
 
 - (CGFloat)pickerView:(UIPickerView *)pickerView widthForComponent:(NSInteger)component
@@ -98,15 +126,14 @@ static CGFloat const kPadding = 20;
     label.adjustsFontSizeToFitWidth = YES;
     label.textColor = [UIColor troveColorNamed:TroveColorTypeText];
     label.font = [UIFont fontWithName:@"TrebuchetMS-Italic" size:17];
-    label.text = [@"Page " stringByAppendingString:[@(row+1)stringValue]];
+    label.text = [@"Page " stringByAppendingString:[@(row+self.lastReadTo+1)stringValue]];
     return label;
 }
 
 - (void)pickerView:(UIPickerView *)pickerView didSelectRow:(NSInteger)row inComponent:(NSInteger)component
 {
-
+    self.brandNewRecord.page = @(row+self.lastReadTo+1); //实时更新page
 }
-
 
 #pragma mark - Getters
 
@@ -115,6 +142,7 @@ static CGFloat const kPadding = 20;
     if (!_datePicker) {
         _datePicker = [UIDatePicker new];
         _datePicker.datePickerMode = UIDatePickerModeDateAndTime;
+        [_datePicker addTarget:self action:@selector(dateChange) forControlEvents:UIControlEventValueChanged];
     }
     return _datePicker;
 }
@@ -133,9 +161,9 @@ static CGFloat const kPadding = 20;
     if (!_noteField) {
         _noteField = [UITextView new];
         _noteField.backgroundColor = self.view.backgroundColor;
-        _noteField.layer.borderColor = [UIColor trovePulseColorType:self.book.color].CGColor;
+        _noteField.layer.borderColor = [UIColor troveColorNamed:TroveColorTypeText].CGColor;
         _noteField.layer.borderWidth = 1;
-        
+        _noteField.keyboardDismissMode = UIScrollViewKeyboardDismissModeOnDrag;
     }
     return _noteField;
 }
@@ -150,10 +178,17 @@ static CGFloat const kPadding = 20;
         _saveButton.layer.borderColor = [UIColor troveColorNamed:TroveColorTypeText] .CGColor;
         _saveButton.layer.borderWidth = 1;
         _saveButton.layer.cornerRadius = 12;
-//        [_saveButton addTarget:self action:@selector(saveRecord) forControlEvents:UIControlEventTouchUpInside];
+        [_saveButton addTarget:self action:@selector(saveRecord) forControlEvents:UIControlEventTouchUpInside];
     }
     return _saveButton;
 }
 
+- (TroveRecordModel *)brandNewRecord
+{
+    if (!_brandNewRecord) {
+        _brandNewRecord = [[TroveRecordModel alloc] initWithDate:self.datePicker.date page:@(self.lastReadTo) note:@""];
+    }
+    return _brandNewRecord;
+}
 
 @end

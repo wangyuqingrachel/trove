@@ -11,6 +11,7 @@
 #import "AddTroveRecordCell.h"
 #import <Masonry/Masonry.h>
 #import "AddRecordViewController.h"
+#import "TroveSettings.h"
 
 @interface RecordsViewController ()<UICollectionViewDelegate, UICollectionViewDataSource, UICollectionViewDelegateFlowLayout>
 
@@ -27,6 +28,7 @@
     self = [super init];
     if (self) {
         [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(restartVC) name:TroveSwitchThemeNotification object:nil];
+        [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(reloadData) name:TroveSwitchThemeNotification object:nil];
         self.book = book;
         self.dataSource = book.records;
     }
@@ -88,12 +90,13 @@
 {
     if (indexPath.item == 0) {
         AddTroveRecordCell *cell = [collectionView dequeueReusableCellWithReuseIdentifier:[AddTroveRecordCell identifier] forIndexPath:indexPath];
-        [cell configWithColor:[UIColor troveColorNamed:self.book.color]];
+        UIColor *color = [TroveSettings appliedDarkMode] ? [UIColor troveColorNamed:self.book.color] : [UIColor trovePulseColorType:self.book.color];
+        [cell configWithColor:color];
         return cell;
     } else {
         TroveRecordCell *cell = [collectionView dequeueReusableCellWithReuseIdentifier:[TroveRecordCell identifier] forIndexPath:indexPath];
         TroveRecordModel *model = self.dataSource[indexPath.item - 1];
-        [cell configWithRecordModel:model];
+        [cell configWithColor:[UIColor troveColorNamed:self.book.color] recordModel:model];
         return cell;
     }
 }
@@ -115,7 +118,7 @@
 
 - (CGFloat)collectionView:(UICollectionView *)collectionView layout:(UICollectionViewLayout *)collectionViewLayout minimumLineSpacingForSectionAtIndex:(NSInteger)section
 {
-    return 10;
+    return 0;
 }
 
 - (UICollectionReusableView *)collectionView:(UICollectionView *)collectionView viewForSupplementaryElementOfKind:(NSString *)kind atIndexPath:(NSIndexPath *)indexPath

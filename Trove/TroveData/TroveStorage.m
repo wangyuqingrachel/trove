@@ -15,7 +15,7 @@
 {
     NSMutableArray <TroveBookModel *> *books = [TroveStorage retriveTroveBooks];
     [books insertObject:newbook atIndex:0];
-    NSLog(@"Create");
+    NSLog(@"Create a book");
     [TroveStorage saveTroveBooks:books];
     [[NSNotificationCenter defaultCenter] postNotificationName:TroveBookCreateNotification object:nil userInfo:nil];
     AudioServicesPlaySystemSound((SystemSoundID)kAudioClick);
@@ -35,12 +35,30 @@
         books[targetIndex].bookTitle = newbook.bookTitle;
         books[targetIndex].totalPages = newbook.totalPages;
         books[targetIndex].color = newbook.color;
-        NSLog(@"Edit");
+        NSLog(@"Edit a book");
         [TroveStorage saveTroveBooks:books];
         [[NSNotificationCenter defaultCenter] postNotificationName:TroveBookEditNotification object:nil userInfo:nil];
         AudioServicesPlaySystemSound((SystemSoundID)kAudioClick);
     }
 }
+
++ (void)addRecord:(TroveRecordModel *)record toBook:(NSString *)bookTitle
+{
+    NSMutableArray <TroveBookModel *> *books = [TroveStorage retriveTroveBooks];
+    for (int i=0; i<books.count; i++) {
+        if ([books[i].bookTitle isEqualToString:bookTitle]) {
+            NSMutableArray<TroveRecordModel *> *records = books[i].records;
+            [records insertObject:record atIndex:0];
+            NSLog(@"Add a record");
+            books[i].records = records;
+            [TroveStorage saveTroveBooks:books];
+            [[NSNotificationCenter defaultCenter] postNotificationName:TroveRecordAddNotification object:nil userInfo:nil];
+            AudioServicesPlaySystemSound((SystemSoundID)kAudioClick);
+            break;
+        }
+    }
+}
+
 
 + (BOOL)bookNameExists:(NSString *)newBookName
 {
@@ -68,7 +86,7 @@
     NSString *path = [paths objectAtIndex:0];
     NSString *filePath = [path stringByAppendingPathComponent:@"trove.data"];
     NSData *storedEncodedObject = [NSData dataWithContentsOfFile:filePath options:0 error:nil];
-    NSDictionary *dataDict = [NSKeyedUnarchiver unarchivedObjectOfClasses:[NSSet setWithArray:@[TroveBookModel.class, TroveRecordModel.class, NSMutableArray.class, NSArray.class, NSDictionary.class, NSString.class, NSNumber.class]] fromData:storedEncodedObject error:nil];
+    NSDictionary *dataDict = [NSKeyedUnarchiver unarchivedObjectOfClasses:[NSSet setWithArray:@[TroveBookModel.class, TroveRecordModel.class, NSMutableArray.class, NSArray.class, NSDictionary.class, NSString.class, NSNumber.class, NSDate.class]] fromData:storedEncodedObject error:nil];
     BOOL isValid = [dataDict.allKeys containsObject:@"books"];
     if (isValid) {
         NSMutableArray<TroveBookModel *> *books = dataDict[@"books"];

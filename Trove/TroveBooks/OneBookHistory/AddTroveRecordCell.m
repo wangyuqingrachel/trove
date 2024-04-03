@@ -22,7 +22,6 @@ static CGFloat const kPlusWidth = 20;
 @property (nonatomic, strong) UIImageView *plus;
 @property (nonatomic, strong) UILabel *label;
 
-
 @end
 
 @implementation AddTroveRecordCell
