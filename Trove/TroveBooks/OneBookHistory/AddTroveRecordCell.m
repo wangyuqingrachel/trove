@@ -61,7 +61,7 @@ static CGFloat const kPlusWidth = 30;
     // text
     self.label.textColor = color;
     [self addSubview:self.label];
-    self.label.text = @"add new record";
+    self.label.text = @"Add a new record";
     [self.label mas_makeConstraints:^(MASConstraintMaker *make) {
         make.left.offset(kTextLeftMagin);
         make.centerY.offset(0);
@@ -102,6 +102,7 @@ static CGFloat const kPlusWidth = 30;
 {
     if (!_label) {
         _label = [UILabel new];
+        _label.font = [UIFont fontWithName:@"TrebuchetMS-Italic" size:16];
     }
     return _label;
 }

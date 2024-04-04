@@ -10,17 +10,20 @@
 #import "UIColor+TroveColor.h"
 
 static CGFloat const kLeftMagin = 50;
-static CGFloat const kTextLeftMagin = 80;
+static CGFloat const kTextLeftRightMagin = 20;
 static CGFloat const kLineWidth = 1;
 static CGFloat const kIconWidth = 30;
 static CGFloat const kPlusWidth = 20;
+static CGFloat const kDatePageHeight = 16;
 
 @interface TroveRecordCell ()
 
 @property (nonatomic, strong) UIView *line;
 @property (nonatomic, strong) UIView *icon;
 @property (nonatomic, strong) UIImageView *edit;
-@property (nonatomic, strong) UILabel *label;
+@property (nonatomic, strong) UILabel *dateLabel;
+@property (nonatomic, strong) UILabel *pageLabel;
+@property (nonatomic, strong) UILabel *noteLabel;
 
 @end
 
@@ -58,13 +61,34 @@ static CGFloat const kPlusWidth = 20;
         make.centerX.centerY.offset(0);
         make.width.height.mas_equalTo(kPlusWidth);
     }];
-    // text
-    self.label.textColor = color;
-    [self addSubview:self.label];
-    self.label.text = [record.page stringValue];
-    [self.label mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.left.offset(kTextLeftMagin);
-        make.centerY.offset(0);
+    // Date label
+    self.dateLabel.textColor = color;
+    [self addSubview:self.dateLabel];
+    self.dateLabel.text = [NSDateFormatter localizedStringFromDate:record.date
+                                                         dateStyle:NSDateFormatterShortStyle
+                                                         timeStyle:NSDateFormatterShortStyle];
+    [self.dateLabel mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.left.mas_equalTo(self.line.mas_right).offset(kTextLeftRightMagin);
+        make.top.offset(10);
+        make.height.mas_equalTo(kDatePageHeight);
+    }];
+    // Page label
+    self.pageLabel.textColor = color;
+    [self addSubview:self.pageLabel];
+    self.pageLabel.text = [@"Page " stringByAppendingString:[record.page stringValue]];
+    [self.pageLabel mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.left.mas_equalTo(self.dateLabel.mas_right).offset(10);
+        make.bottom.mas_equalTo(self.dateLabel.mas_bottom);
+    }];
+    // Note label
+    self.noteLabel.textColor = color;
+    [self addSubview:self.noteLabel];
+    self.noteLabel.text = record.note;
+    [self.noteLabel mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.left.mas_equalTo(self.line.mas_right).offset(kTextLeftRightMagin);
+        make.right.offset(-kTextLeftRightMagin);
+        make.top.mas_equalTo(self.dateLabel.mas_bottom).offset(10);
+        make.bottom.offset(-10);
     }];
 
 
@@ -98,12 +122,32 @@ static CGFloat const kPlusWidth = 20;
     return _edit;
 }
 
-- (UILabel *)label
+- (UILabel *)dateLabel
 {
-    if (!_label) {
-        _label = [UILabel new];
+    if (!_dateLabel) {
+        _dateLabel = [UILabel new];
+        _dateLabel.font = [UIFont fontWithName:@"TrebuchetMS-Italic" size:16];
     }
-    return _label;
+    return _dateLabel;
+}
+
+- (UILabel *)pageLabel
+{
+    if (!_pageLabel) {
+        _pageLabel = [UILabel new];
+        _pageLabel.font = [UIFont fontWithName:@"TrebuchetMS-Italic" size:14];
+    }
+    return _pageLabel;
+}
+
+- (UILabel *)noteLabel
+{
+    if (!_noteLabel) {
+        _noteLabel = [UILabel new];
+        _noteLabel.font = [UIFont fontWithName:@"TrebuchetMS-Italic" size:14];
+        _noteLabel.textColor = [UIColor troveColorNamed:TroveColorTypeText];
+    }
+    return _noteLabel;
 }
 
 @end
